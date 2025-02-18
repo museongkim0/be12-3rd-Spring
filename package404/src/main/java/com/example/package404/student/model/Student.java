@@ -1,4 +1,4 @@
-package com.example.package404.manager.model;
+package com.example.package404.student.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
 @Entity
-public class Manager {
+@Builder
+public class Student {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // AUTO INCREMENT
     private Long idx;
-    private String nickname;
-    private String email;
-    private String password;
+    private String name;
+    private String phoneNumber;
+    private String birthDate;
 }
