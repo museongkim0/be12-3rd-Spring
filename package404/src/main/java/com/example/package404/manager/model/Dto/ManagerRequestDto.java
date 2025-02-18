@@ -9,12 +9,12 @@ import lombok.Getter;
 public class ManagerRequestDto {
     private String email;
     private String password;
-    private String nickName;
+    private String nickname;
 
     public Manager toEntity(String encodedPassword) {
         return Manager.builder()
                 .email(email)
-                .nickname(nickName)
+                .nickname(nickname)
                 .password(encodedPassword)
                 .build();
     }

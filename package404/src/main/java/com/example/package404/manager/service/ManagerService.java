@@ -1,10 +1,14 @@
 package com.example.package404.manager.service;
 
 import com.example.package404.manager.model.Dto.ManagerRequestDto;
+import com.example.package404.manager.model.Dto.ManagerResponseDto;
+import com.example.package404.manager.model.Manager;
 import com.example.package404.manager.repository.ManagerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,5 +19,17 @@ public class ManagerService {
     public void signup(ManagerRequestDto dto) {
         //String encodedPassword = passwordEncoder.encode(dto.getPassword());
         managerRepository.save(dto.toEntity(dto.getPassword()/*encodedPassword*/));
+    }
+
+    public List<ManagerResponseDto> getList() {
+        List<Manager> managerList = managerRepository.findAll();
+
+        return managerList.stream().map(ManagerResponseDto::of).toList();
+    }
+
+    public ManagerResponseDto get(Long managerIdx) {
+        Manager manager = managerRepository.findById(managerIdx).orElseThrow();
+
+        return ManagerResponseDto.of(manager);
     }
 }
