@@ -1,5 +1,6 @@
 package com.example.package404.manager.controller;
 
+import com.example.package404.instructor.model.Dto.InstructorResponseDto;
 import com.example.package404.manager.model.Dto.ManagerRequestDto;
 import com.example.package404.manager.model.Dto.ManagerResponseDto;
 import com.example.package404.manager.service.ManagerService;
@@ -27,9 +28,15 @@ public class ManagerController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/find/{managerIdx}")
-    public ResponseEntity<ManagerResponseDto> find(@PathVariable Long managerIdx) {
-        ManagerResponseDto response = managerService.get(managerIdx);
+    @GetMapping("/find/manager/{managerIdx}")
+    public ResponseEntity<ManagerResponseDto> findManager(@PathVariable Long managerIdx) {
+        ManagerResponseDto response = managerService.getManager(managerIdx);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/find/instructor/{instructorIdx}")
+    public ResponseEntity<InstructorResponseDto> findInstructor(@PathVariable Long instructorIdx) {
+        InstructorResponseDto response = managerService.getInstructor(instructorIdx);
         return ResponseEntity.ok(response);
     }
 }

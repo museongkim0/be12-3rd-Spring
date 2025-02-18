@@ -1,11 +1,14 @@
 package com.example.package404.manager.service;
 
+import com.example.package404.instructor.model.Dto.InstructorResponseDto;
+import com.example.package404.instructor.model.Instructor;
+import com.example.package404.instructor.repository.InstructorRepository;
+import com.example.package404.instructor.service.InstructorService;
 import com.example.package404.manager.model.Dto.ManagerRequestDto;
 import com.example.package404.manager.model.Dto.ManagerResponseDto;
 import com.example.package404.manager.model.Manager;
 import com.example.package404.manager.repository.ManagerRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ManagerService {
     private final ManagerRepository managerRepository;
+    //private final InstructorService instructorService;
     //private final PasswordEncoder passwordEncoder;
 
     public void signup(ManagerRequestDto dto) {
@@ -27,9 +31,13 @@ public class ManagerService {
         return managerList.stream().map(ManagerResponseDto::of).toList();
     }
 
-    public ManagerResponseDto get(Long managerIdx) {
+    public ManagerResponseDto getManager(Long managerIdx) {
         Manager manager = managerRepository.findById(managerIdx).orElseThrow();
 
         return ManagerResponseDto.of(manager);
+    }
+
+    public InstructorResponseDto getInstructor(Long instructorIdx) {
+        return instructorService.getInstructor(instructorIdx);
     }
 }
