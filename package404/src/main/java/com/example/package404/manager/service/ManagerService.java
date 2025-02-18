@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ManagerService {
     private final ManagerRepository managerRepository;
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
 
     public void signup(ManagerRequestDto dto) {
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
-        managerRepository.save(dto.toEntity(encodedPassword));
+        //String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        managerRepository.save(dto.toEntity(dto.getPassword()/*encodedPassword*/));
     }
 }
