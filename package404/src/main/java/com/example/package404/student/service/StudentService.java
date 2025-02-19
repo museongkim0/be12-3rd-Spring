@@ -2,7 +2,7 @@ package com.example.package404.student.service;
 
 import com.example.package404.student.model.Dto.StudentRegisterDto;
 import com.example.package404.student.model.Dto.StudentResponseDto;
-import com.example.package404.student.model.Student;
+import com.example.package404.student.model.StudentDetail;
 import com.example.package404.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,13 +20,13 @@ public class StudentService {
     }
 
     public List<StudentResponseDto> list() {
-        List<Student> boardList = studentRepository.findAll();
+        List<StudentDetail> boardList = studentRepository.findAll();
         return boardList.stream().map(StudentResponseDto::from).collect(Collectors.toList());
     }
 
     public StudentResponseDto read(Long idx) {
-        Student student = studentRepository.findById(idx).orElseThrow();
+        StudentDetail studentDetail = studentRepository.findById(idx).orElseThrow();
 
-        return StudentResponseDto.from(student);
+        return StudentResponseDto.from(studentDetail);
     }
 }

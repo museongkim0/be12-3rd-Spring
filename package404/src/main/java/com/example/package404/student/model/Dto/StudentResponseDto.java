@@ -1,6 +1,6 @@
 package com.example.package404.student.model.Dto;
 
-import com.example.package404.student.model.Student;
+import com.example.package404.student.model.StudentDetail;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,12 +16,12 @@ public class StudentResponseDto {
     private String phoneNumber;
     private String birthDate;
 
-    public static StudentResponseDto from(Student student) {
+    public static StudentResponseDto from(StudentDetail studentDetail) {
         return StudentResponseDto.builder()
-                .idx(student.getIdx())
-                .name(student.getName())
-                .phoneNumber(student.getPhoneNumber())
-                .birthDate(student.getBirthDate())
+                .idx(studentDetail.getIdx())
+                .name(studentDetail.getName())
+                .phoneNumber(studentDetail.getPhoneNumber())
+                .birthDate(studentDetail.getBirthDate())
                 .build();
     }
 }
