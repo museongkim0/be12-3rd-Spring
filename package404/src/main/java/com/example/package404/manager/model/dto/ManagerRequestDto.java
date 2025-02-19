@@ -1,4 +1,4 @@
-package com.example.package404.manager.model.Dto;
+package com.example.package404.manager.model.dto;
 
 import com.example.package404.manager.model.Manager;
 import lombok.Builder;
