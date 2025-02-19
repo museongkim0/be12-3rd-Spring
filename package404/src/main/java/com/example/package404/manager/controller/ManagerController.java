@@ -1,6 +1,6 @@
 package com.example.package404.manager.controller;
 
-import com.example.package404.instructor.model.Dto.InstructorResponseDto;
+import com.example.package404.instructor.model.dto.InstructorResponseDto;
 import com.example.package404.manager.model.dto.ManagerRequestDto;
 import com.example.package404.manager.model.dto.ManagerResponseDto;
 import com.example.package404.manager.service.ManagerService;
@@ -15,11 +15,6 @@ import java.util.List;
 @RequestMapping("/manager")
 public class ManagerController {
     private final ManagerService managerService;
-
-    @PostMapping("/signup")
-    public void signup(@RequestBody ManagerRequestDto dto) {
-        managerService.signup(dto);
-    }
 
     @GetMapping("/list")
     public ResponseEntity<List<ManagerResponseDto>> list() {
