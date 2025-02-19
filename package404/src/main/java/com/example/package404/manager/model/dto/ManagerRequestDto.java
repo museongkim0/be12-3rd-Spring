@@ -1,6 +1,6 @@
 package com.example.package404.manager.model.dto;
 
-import com.example.package404.manager.model.Manager;
+import com.example.package404.user.model.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,10 +11,9 @@ public class ManagerRequestDto {
     private String password;
     private String nickname;
 
-    public Manager toEntity(String encodedPassword) {
-        return Manager.builder()
+    public User toEntity(String encodedPassword) {
+        return User.builder()
                 .email(email)
-                .nickname(nickname)
                 .password(encodedPassword)
                 .build();
     }

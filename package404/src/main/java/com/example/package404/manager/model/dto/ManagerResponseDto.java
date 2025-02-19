@@ -1,6 +1,6 @@
 package com.example.package404.manager.model.dto;
 
-import com.example.package404.manager.model.Manager;
+import com.example.package404.user.model.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,14 +9,11 @@ import lombok.Getter;
 public class ManagerResponseDto {
     private Long idx;
     private String email;
-    private String password;
-    private String nickname;
 
-    public static ManagerResponseDto of(Manager entity) {
+    public static ManagerResponseDto of(User entity) {
         return ManagerResponseDto.builder()
                 .idx(entity.getIdx())
                 .email(entity.getEmail())
-                .nickname(entity.getNickname())
                 .build();
     }
 }
