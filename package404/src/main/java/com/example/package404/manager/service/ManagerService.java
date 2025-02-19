@@ -1,11 +1,9 @@
 package com.example.package404.manager.service;
 
-import com.example.package404.instructor.model.Dto.InstructorResponseDto;
-import com.example.package404.instructor.model.Instructor;
-import com.example.package404.instructor.repository.InstructorRepository;
+import com.example.package404.instructor.model.dto.InstructorResponseDto;
 import com.example.package404.instructor.service.InstructorService;
-import com.example.package404.manager.model.Dto.ManagerRequestDto;
-import com.example.package404.manager.model.Dto.ManagerResponseDto;
+import com.example.package404.manager.model.dto.ManagerRequestDto;
+import com.example.package404.manager.model.dto.ManagerResponseDto;
 import com.example.package404.manager.model.Manager;
 import com.example.package404.manager.repository.ManagerRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ManagerService {
     private final ManagerRepository managerRepository;
-    //private final InstructorService instructorService;
+    private final InstructorService instructorService;
     //private final PasswordEncoder passwordEncoder;
 
     public void signup(ManagerRequestDto dto) {
