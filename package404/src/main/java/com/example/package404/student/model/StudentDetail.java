@@ -24,7 +24,7 @@ public class StudentDetail {
     private Integer outing;
     private Integer vacationLeft;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="user_idx")
     private User user;
 }

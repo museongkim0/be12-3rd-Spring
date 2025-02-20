@@ -1,11 +1,13 @@
 package com.example.package404.student.controller;
 
-import com.example.package404.student.model.Dto.StudentRegisterDto;
+import com.example.package404.student.model.Dto.StudentDetailRegisterDto;
+import com.example.package404.student.model.Dto.StudentDetailResponseDto;
 import com.example.package404.student.model.Dto.StudentResponseDto;
 import com.example.package404.student.service.StudentService;
+import com.example.package404.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +18,19 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
 
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@AuthenticationPrincipal User user, @RequestBody StudentDetailRegisterDto dto) {
+//        User user = new User();
+//        user.setIdx(2L);
+//        user.setEmail("test2@test.com");
+//        user.setPassword("qwer1234");
+//        user.setName("lee");
+//        user.setRole("ROLE_STUDENT");
+        studentService.register(dto, user);
+
+        return ResponseEntity.ok("success");
+    }
+
     @GetMapping("/read/{idx}")
     public ResponseEntity<StudentResponseDto> read(@PathVariable Long idx) {
         StudentResponseDto response = studentService.read(idx);
@@ -24,14 +39,7 @@ public class StudentController {
 
     @GetMapping("/list")
     public ResponseEntity<List<StudentResponseDto>> list() {
-        List<StudentResponseDto> boardResList = studentService.list();
-        return ResponseEntity.ok(boardResList);
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody StudentRegisterDto dto) {
-        studentService.register(dto);
-
-        return ResponseEntity.ok("success");
+        List<StudentResponseDto> studentResList = studentService.list();
+        return ResponseEntity.ok(studentResList);
     }
 }
