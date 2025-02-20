@@ -6,6 +6,7 @@ import com.example.package404.instructor.service.InstructorService;
 import com.example.package404.manager.model.Test;
 import com.example.package404.manager.model.dto.ManagerResponseDto;
 import com.example.package404.manager.model.dto.TestRequestDto;
+import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.repository.ManagerRepository;
 import com.example.package404.manager.repository.TestRepository;
 import com.example.package404.user.model.User;
@@ -40,11 +41,12 @@ public class ManagerService {
         return InstructorResponseDto.of(instructor);
     }
 
-    public void registerTest(TestRequestDto dto){
-        testRepository.save(dto.toEntity());
+    public TestResponseDto registerTest(TestRequestDto dto){
+        Test test = testRepository.save(dto.toEntity());
+        return TestResponseDto.of(test);
     }
 
-    public void updateTest(Long testIdx, TestRequestDto dto) {
+    public TestResponseDto updateTest(Long testIdx, TestRequestDto dto) {
         Test test = testRepository.findById(testIdx)
                 .orElseThrow(() -> new RuntimeException("Test with id " + testIdx + " not found"));
 
@@ -52,12 +54,16 @@ public class ManagerService {
         test.setContent(dto.getContent());
 
         testRepository.save(test);
+
+        return TestResponseDto.of(test);
     }
 
-    public void deleteTest(Long testIdx) {
-        if (!testRepository.existsById(testIdx)) {
-            throw new RuntimeException("Test with id " + testIdx + " not found");
-        }
-        testRepository.deleteById(testIdx);
+    public TestResponseDto deleteTest(Long testIdx) {
+        Test test = testRepository.findById(testIdx)
+                .orElseThrow(() -> new RuntimeException("Test with id " + testIdx + " not found"));
+
+        testRepository.delete(test);
+
+        return TestResponseDto.of(test);
     }
 }
