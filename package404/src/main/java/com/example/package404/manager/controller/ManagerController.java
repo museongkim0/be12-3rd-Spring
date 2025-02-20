@@ -1,10 +1,11 @@
 package com.example.package404.manager.controller;
 
-import com.example.package404.instructor.model.dto.InstructorResponseDto;
 import com.example.package404.manager.model.dto.ManagerResponseDto;
 import com.example.package404.manager.model.dto.TestRequestDto;
+import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.service.ManagerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,17 +37,20 @@ public class ManagerController {
     }
 
     @PostMapping("/test/register")
-    public void registerTest(@RequestBody TestRequestDto dto) {
-        managerService.registerTest(dto);
+    public ResponseEntity<TestResponseDto> registerTest(@RequestBody TestRequestDto dto) {
+        TestResponseDto response = managerService.registerTest(dto);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/test/update/{testIdx}")
-    public void updateTest(Long testIdx, @RequestBody TestRequestDto dto) {
-        managerService.updateTest(testIdx, dto);
+    public ResponseEntity<TestResponseDto> updateTest(Long testIdx, @RequestBody TestRequestDto dto) {
+        TestResponseDto response = managerService.updateTest(testIdx, dto);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/test/delete/{testIdx}")
-    public void deleteTest(Long testIdx) {
-        managerService.deleteTest(testIdx);
+    public ResponseEntity<TestResponseDto> deleteTest(Long testIdx) {
+        TestResponseDto response = managerService.deleteTest(testIdx);
+        return ResponseEntity.ok(response);
     }
 }
