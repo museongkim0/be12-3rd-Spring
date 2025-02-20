@@ -1,7 +1,7 @@
 package com.example.package404.instructor.controller;
 
-import com.example.package404.instructor.model.dto.CourseRegister;
-import com.example.package404.instructor.model.dto.CourseResDto;
+import com.example.package404.instructor.model.dto.req.CourseRegister;
+import com.example.package404.instructor.model.dto.res.CourseResDto;
 import com.example.package404.instructor.service.CourseService;
 import com.example.package404.user.model.User;
 import lombok.RequiredArgsConstructor;

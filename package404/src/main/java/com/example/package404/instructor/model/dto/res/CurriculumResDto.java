@@ -1,4 +1,4 @@
-package com.example.package404.instructor.model.dto;
+package com.example.package404.instructor.model.dto.res;
 
 import com.example.package404.instructor.model.Curriculum;
 import lombok.AllArgsConstructor;

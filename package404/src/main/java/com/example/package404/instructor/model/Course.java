@@ -26,7 +26,7 @@ public class Course {
     private List<Curriculum> sectionList = new ArrayList<>();
 
 
-//    @ManyToOne
-//    @JoinColumn(name="user_idx")
-//    private User user;
+    @OneToOne
+    @JoinColumn(name="instructor_idx")
+    private Instructor instructor;
 }
