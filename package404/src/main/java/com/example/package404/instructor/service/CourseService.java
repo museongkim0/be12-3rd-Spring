@@ -25,6 +25,7 @@ public class CourseService {
 
     @Transactional
     public void register(CourseRegister dto, User user) {
+        System.out.println(user.getIdx());
         Course course = courseRepository.save(dto.toEntity(user));
 
         dto.getCurriculumList().forEach(Course_CurriculumRegisterDto -> {
