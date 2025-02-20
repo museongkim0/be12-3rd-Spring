@@ -18,6 +18,7 @@ public class CourseRegister {
 
     private String name;
     private int generation;
+    private Long user_idx;
 
 
     List<CurriculumRegisterDto> curriculumList = new ArrayList<>();
@@ -28,9 +29,9 @@ public class CourseRegister {
                 .build();
 
         return Course.builder()
+                .instructor(instructor)
                 .name(name)
                 .generation(generation)
-                .instructor(instructor)
                 .build();
 
     }

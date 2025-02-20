@@ -22,7 +22,9 @@ public class CourstController {
 
 
     @PostMapping("/register")
-    public void register(@AuthenticationPrincipal User user, @RequestBody CourseRegister dto) {
+    public void register(/*@AuthenticationPrincipal User user,*/ @RequestBody CourseRegister dto) {
+        User user = new User();
+        user.setIdx(3L);
         courseService.register(dto, user);
     }
 
