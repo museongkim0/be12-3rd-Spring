@@ -1,7 +1,7 @@
 package com.example.package404.instructor.controller;
 
 import com.example.package404.instructor.model.dto.req.CourseRegister;
-import com.example.package404.instructor.model.dto.res.CourseResDto;
+import com.example.package404.instructor.model.dto.res.CourseResponseDto;
 import com.example.package404.instructor.service.CourseService;
 import com.example.package404.user.model.User;
 import lombok.RequiredArgsConstructor;
@@ -27,15 +27,15 @@ public class CourstController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<CourseResDto>> list() {
-        List<CourseResDto> response = courseService.list();
+    public ResponseEntity<List<CourseResponseDto>> list() {
+        List<CourseResponseDto> response = courseService.list();
 
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{courseIdx}")
-    public ResponseEntity<CourseResDto> read(@PathVariable Long courseIdx) {
-        CourseResDto  response = courseService.read(courseIdx);
+    public ResponseEntity<CourseResponseDto> read(@PathVariable Long courseIdx) {
+        CourseResponseDto response = courseService.read(courseIdx);
         return ResponseEntity.ok(response);
     }
 

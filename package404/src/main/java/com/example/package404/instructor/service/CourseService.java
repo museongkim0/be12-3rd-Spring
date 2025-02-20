@@ -4,19 +4,15 @@ package com.example.package404.instructor.service;
 import com.example.package404.instructor.model.Course;
 import com.example.package404.instructor.model.Instructor;
 import com.example.package404.instructor.model.dto.req.CourseRegister;
-import com.example.package404.instructor.model.dto.res.CourseResDto;
-import com.example.package404.instructor.model.dto.res.InstructorIdDto;
-import com.example.package404.instructor.model.dto.res.InstructorResDto;
+import com.example.package404.instructor.model.dto.res.CourseResponseDto;
 import com.example.package404.instructor.repository.CourseRepository;
 import com.example.package404.instructor.repository.CurriculumRepository;
-import com.example.package404.instructor.repository.InstructorRepository;
 import com.example.package404.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,8 +25,7 @@ public class CourseService {
 
     @Transactional
     public void register(CourseRegister dto, User user) {
-        Instructor instructor = instructorService.getInstructorId(user.getIdx());
-        Course course = courseRepository.save(dto.toEntity(instructor));
+        Course course = courseRepository.save(dto.toEntity(user));
 
         dto.getCurriculumList().forEach(Course_CurriculumRegisterDto -> {
             curriculumRepository.save(Course_CurriculumRegisterDto.toEntity(course));
@@ -44,15 +39,15 @@ public class CourseService {
 //    }
 
     @Transactional(readOnly = true)
-    public List<CourseResDto> list() {
+    public List<CourseResponseDto> list() {
         List <Course> result = courseRepository.findAll();
-        return result.stream().map(CourseResDto::from).collect(Collectors.toList());
+        return result.stream().map(CourseResponseDto::from).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public CourseResDto read(Long courseIdx) {
+    public CourseResponseDto read(Long courseIdx) {
         Course course = courseRepository.findById(courseIdx).orElseThrow();
-        return CourseResDto.from(course);
+        return CourseResponseDto.from(course);
     }
 
 
