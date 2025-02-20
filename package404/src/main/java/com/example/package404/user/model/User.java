@@ -1,10 +1,8 @@
 package com.example.package404.user.model;
 
+import com.example.package404.student.model.StudentDetail;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,6 +27,9 @@ public class User implements UserDetails {
     private String password;
     private String name;
     private String role;
+
+    @OneToOne(mappedBy = "user")
+    private StudentDetail studentDetail;
 
     @ElementCollection(fetch = FetchType.EAGER) // 다중 권한 저장
     private List<String> roles = new ArrayList<>();
