@@ -19,15 +19,16 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     // 회원가입 (Signup)
-    public UserResponseDto.SignupResponse signup(UserRequestDto.SignupRequest dto) {
-        User user = userRepository.save(dto.toEntity(passwordEncoder.encode(dto.getPassword())));
-        return UserResponseDto.SignupResponse.from(user);
+    public void signup(UserRequestDto.SignupRequest dto) {
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+
+        userRepository.save(dto.toEntity(encodedPassword, dto.getroles())); // roles 추가
     }
 
     // 사용자 정보 로드 (Spring Security)
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByemail(username)
+        User user = userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
         return user;
     }
