@@ -1,13 +1,18 @@
-package com.example.package404.instructor.model.dto;
+package com.example.package404.instructor.model.dto.req;
 
 import com.example.package404.instructor.model.Course;
 import com.example.package404.instructor.model.Curriculum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CurriculumRegisterDto {
 
 

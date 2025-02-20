@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
@@ -30,35 +31,40 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user")
     private StudentDetail studentDetail;
 
-
-
-
+    @ElementCollection(fetch = FetchType.EAGER) // 다중 권한 저장
+    private List<String> roles = new ArrayList<>();
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return true;
     }
 
     @Override
     public String getUsername() {
-        return "";
+        return email;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        GrantedAuthority authority = new SimpleGrantedAuthority(role);
-//        GrantedAuthority authority = new GrantedAuthority() {
-//            @Override
-//            public String getAuthority() {
-//                return role;
-//            }
-//        };
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Collection<GrantedAuthority> authorities = new ArrayList<>();
+//        GrantedAuthority authority = new SimpleGrantedAuthority(role);
+////        GrantedAuthority authority = new GrantedAuthority() {
+////            @Override
+////            public String getAuthority() {
+////                return role;
+////            }
+////        };
+//
+//        authorities.add(authority);
+//        return authorities;
+//    }
 
-        authorities.add(authority);
-        return authorities;
-    }
-
+@Override
+public Collection<? extends GrantedAuthority> getAuthorities() {
+    return roles.stream()
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
+}
 
 
     @Override

@@ -4,6 +4,8 @@ import com.example.package404.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 public class UserRequestDto {
 
     @AllArgsConstructor
@@ -12,13 +14,14 @@ public class UserRequestDto {
         private String email;
         private String password;
 
-        public User toEntity(String encodedPassword) {
+        public User toEntity(String encodedPassword, List<String> roles) {
             return User.builder()
                     .email(email)
                     .password(encodedPassword)
-                    .role("ROLE_USER")
+                    .roles(roles) // 여러 개의 권한을 저장할 수 있도록 수정
                     .build();
         }
+
     }
 
 
