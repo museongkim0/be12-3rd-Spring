@@ -1,0 +1,35 @@
+package com.example.package404.response;
+
+import lombok.Getter;
+
+@Getter
+public enum InstructorResponseStatus {
+    // 4000번대 - Instructor 관련 에러
+    INSTRUCTOR_NOT_FOUND(false, 4001, "강사 정보를 찾을 수 없습니다."),
+    DUPLICATE_INSTRUCTOR(false, 4002, "이미 존재하는 강사입니다."),
+    INVALID_INSTRUCTOR_ID(false, 4003, "잘못된 강사 ID입니다."),
+    INSTRUCTOR_ASSIGNMENT_FAILED(false, 4004, "강사 배정에 실패했습니다."),
+    INSTRUCTOR_ALREADY_ASSIGNED(false, 4005, "강사가 이미 해당 강의에 배정되었습니다."),
+    COURSE_NOT_FOUND(false, 4006, "강의 정보를 찾을 수 없습니다."),
+    INSTRUCTOR_ACCESS_DENIED(false, 4007, "강사가 접근할 수 없는 리소스입니다."),
+    INSTRUCTOR_CANNOT_GRADE(false, 4008, "강사가 해당 학생의 성적을 수정할 권한이 없습니다."),
+    COURSE_CREATION_FAILED(false, 4009, "강의 개설에 실패했습니다.");
+
+    private boolean isSuccess; // 성공 여부
+    private String message; // 메시지
+    private int code; // 코드
+
+    /*
+     * BaseResponseStatus 에서 해당하는 코드를 매핑
+     *
+     * @param isSuccess
+     * @param code
+     * @param message
+     */
+    InstructorResponseStatus(boolean isSuccess, int code, String message) {
+        this.isSuccess = isSuccess;
+        this.code = code;
+        this.message = message;
+    }
+
+}
