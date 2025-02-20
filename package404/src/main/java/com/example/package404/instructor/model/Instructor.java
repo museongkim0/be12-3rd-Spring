@@ -14,11 +14,9 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Instructor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
+    private Long userIdx; // user의 PK를 Instructor의 PK로 사용
 
     private String record;
-
     private String portfolio;
 
 

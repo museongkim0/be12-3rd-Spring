@@ -16,21 +16,21 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CourseResDto {
+public class CourseResponseDto {
 
     private Long idx;
     private String name;
     private int generation;
 
+    @Builder.Default
+    List<CurriculumResponseDto> curriculumList = new ArrayList<>();
 
-    List<CurriculumResDto> curriculumList = new ArrayList<>();
-
-    public static CourseResDto from(Course course) {
-        return CourseResDto.builder()
+    public static CourseResponseDto from(Course course) {
+        return CourseResponseDto.builder()
                 .idx(course.getIdx())
                 .name(course.getName())
                 .generation(course.getGeneration())
-                .curriculumList(course.getSectionList().stream().map(CurriculumResDto::from).collect(Collectors.toList()))
+                .curriculumList(course.getSectionList().stream().map(CurriculumResponseDto::from).collect(Collectors.toList()))
                 .build();
     }
 

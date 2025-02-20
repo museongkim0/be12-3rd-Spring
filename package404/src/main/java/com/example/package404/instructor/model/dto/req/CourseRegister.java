@@ -22,7 +22,11 @@ public class CourseRegister {
 
     List<CurriculumRegisterDto> curriculumList = new ArrayList<>();
 
-    public Course toEntity(Instructor instructor) {
+    public Course toEntity(User user) {
+        Instructor instructor = Instructor.builder()
+                .user(user)
+                .build();
+
         return Course.builder()
                 .name(name)
                 .generation(generation)

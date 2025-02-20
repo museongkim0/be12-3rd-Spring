@@ -27,6 +27,6 @@ public class Course {
 
 
     @OneToOne
-    @JoinColumn(name="instructor_idx")
+    @JoinColumn(name="user_idx")
     private Instructor instructor;
 }
