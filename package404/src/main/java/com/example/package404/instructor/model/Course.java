@@ -31,6 +31,6 @@ public class Course {
     private List<Test> testList = new ArrayList<>();
 
     @OneToOne
-    @JoinColumn(name="instructor_idx")
+    @JoinColumn(name="user_idx")
     private Instructor instructor;
 }

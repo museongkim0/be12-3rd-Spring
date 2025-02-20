@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CurriculumResDto {
+public class CurriculumResponseDto {
 
     private Long idx;
     private String name;
@@ -26,8 +26,8 @@ public class CurriculumResDto {
 
 
 
-    public static CurriculumResDto from(Curriculum curriculum) {
-        return CurriculumResDto.builder()
+    public static CurriculumResponseDto from(Curriculum curriculum) {
+        return CurriculumResponseDto.builder()
                 .idx(curriculum.getIdx())
                 .name(curriculum.getName())
                 .curriculumDate(curriculum.getCurriculumDate())
