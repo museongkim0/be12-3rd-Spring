@@ -1,7 +1,9 @@
 package com.example.package404.student.service;
 
 import com.example.package404.student.model.Dto.StudentDetailRegisterDto;
+import com.example.package404.student.model.Dto.StudentDetailUpdateDto;
 import com.example.package404.student.model.Dto.StudentResponseDto;
+import com.example.package404.student.model.StudentDetail;
 import com.example.package404.student.repository.StudentRepository;
 import com.example.package404.user.model.User;
 import com.example.package404.user.repository.UserRepository;
@@ -30,5 +32,11 @@ public class StudentService {
         User user = userRepository.findById(idx).orElseThrow();
 
         return StudentResponseDto.from(user);
+    }
+
+    public void update(User user, String action) {
+        StudentDetail studentDetail = studentRepository.findByUserIdx(user);
+
+        studentRepository.save(StudentDetailUpdateDto.toEntity(studentDetail, action));
     }
 }
