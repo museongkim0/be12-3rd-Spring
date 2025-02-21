@@ -1,6 +1,6 @@
-package com.example.package404.exception;
+package com.example.package404.global.exception;
 
-import com.example.package404.response.BoardResponseStatus;
+import com.example.package404.global.response.responseStatus.BoardResponseStatus;
 
 public class BoardException extends BaseException {
     public BoardException(BoardResponseStatus status) {

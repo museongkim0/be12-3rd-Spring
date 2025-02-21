@@ -1,4 +1,4 @@
-package com.example.package404.response;
+package com.example.package404.global.response;
 
 import lombok.Builder;
 import lombok.Getter;

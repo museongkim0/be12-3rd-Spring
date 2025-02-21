@@ -1,8 +1,4 @@
-package com.example.package404.response;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+package com.example.package404.global.response.responseStatus;
 
 
 /*

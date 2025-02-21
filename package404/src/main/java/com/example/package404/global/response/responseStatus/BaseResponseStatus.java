@@ -1,6 +1,4 @@
-package com.example.package404.response;
-
-import lombok.Getter;
+package com.example.package404.global.response.responseStatus;
 
 
 /*

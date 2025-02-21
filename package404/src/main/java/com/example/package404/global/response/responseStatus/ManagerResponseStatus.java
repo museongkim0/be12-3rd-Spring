@@ -1,9 +1,9 @@
-package com.example.package404.response;
+package com.example.package404.global.response.responseStatus;
 
 import lombok.Getter;
 
 @Getter
-public enum ManagerResponseStatus {
+public enum ManagerResponseStatus implements BaseResponseStatus {
     // 5000번대 - Manager 관련 에러
     MANAGER_NOT_FOUND(false, 5001, "매니저 정보를 찾을 수 없습니다."),
     DUPLICATE_MANAGER(false, 5002, "이미 존재하는 매니저입니다."),
@@ -14,20 +14,28 @@ public enum ManagerResponseStatus {
     MANAGER_CANNOT_MODIFY_COURSE(false, 5007, "매니저가 강의 정보를 수정할 수 없습니다."),
     MANAGER_APPROVAL_REQUIRED(false, 5008, "해당 작업에는 매니저 승인이 필요합니다.");
 
-    private boolean isSuccess; // 성공 여부
-    private String message; // 메시지
-    private int code; // 코드
+    private final boolean isSuccess;
+    private final int code;
+    private final String message;
 
-    /*
-     * BaseResponseStatus 에서 해당하는 코드를 매핑
-     *
-     * @param isSuccess
-     * @param code
-     * @param message
-     */
     ManagerResponseStatus(boolean isSuccess, int code, String message) {
         this.isSuccess = isSuccess;
         this.code = code;
         this.message = message;
+    }
+
+    @Override
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    @Override
+    public int getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

@@ -1,6 +1,6 @@
-package com.example.package404.exception;
+package com.example.package404.global.exception;
 
-import com.example.package404.response.BaseResponseStatus;
+import com.example.package404.global.response.responseStatus.BaseResponseStatus;
 import lombok.Getter;
 
 @Getter

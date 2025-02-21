@@ -1,9 +1,9 @@
-package com.example.package404.response;
+package com.example.package404.global.response.responseStatus;
 
 import lombok.Getter;
 
 @Getter
-public enum InstructorResponseStatus {
+public enum InstructorResponseStatus implements BaseResponseStatus {
     // 4000번대 - Instructor 관련 에러
     INSTRUCTOR_NOT_FOUND(false, 4001, "강사 정보를 찾을 수 없습니다."),
     DUPLICATE_INSTRUCTOR(false, 4002, "이미 존재하는 강사입니다."),
@@ -15,21 +15,28 @@ public enum InstructorResponseStatus {
     INSTRUCTOR_CANNOT_GRADE(false, 4008, "강사가 해당 학생의 성적을 수정할 권한이 없습니다."),
     COURSE_CREATION_FAILED(false, 4009, "강의 개설에 실패했습니다.");
 
-    private boolean isSuccess; // 성공 여부
-    private String message; // 메시지
-    private int code; // 코드
+    private final boolean isSuccess;
+    private final int code;
+    private final String message;
 
-    /*
-     * BaseResponseStatus 에서 해당하는 코드를 매핑
-     *
-     * @param isSuccess
-     * @param code
-     * @param message
-     */
     InstructorResponseStatus(boolean isSuccess, int code, String message) {
         this.isSuccess = isSuccess;
         this.code = code;
         this.message = message;
     }
 
+    @Override
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    @Override
+    public int getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

@@ -1,9 +1,9 @@
-package com.example.package404.response;
+package com.example.package404.global.response.responseStatus;
 
 import lombok.Getter;
 
 @Getter
-public enum StudentResponseStatus {
+public enum StudentResponseStatus implements BaseResponseStatus {
 
     // 3000번대 - Student 관련 에러
     STUDENT_NOT_FOUND(false, 3001, "학생 정보를 찾을 수 없습니다."),
@@ -16,20 +16,28 @@ public enum StudentResponseStatus {
     STUDENT_PROGRESS_NOT_FOUND(false, 3008, "학생의 학습 진행 정보를 찾을 수 없습니다."),
     STUDENT_GRADE_NOT_FOUND(false, 3009, "학생의 성적 정보를 찾을 수 없습니다.");
 
-    private boolean isSuccess; // 성공 여부
-    private String message; // 메시지
-    private int code; // 코드
+    private final boolean isSuccess;
+    private final int code;
+    private final String message;
 
-    /*
-     * BaseResponseStatus 에서 해당하는 코드를 매핑
-     *
-     * @param isSuccess
-     * @param code
-     * @param message
-     */
     StudentResponseStatus(boolean isSuccess, int code, String message) {
         this.isSuccess = isSuccess;
         this.code = code;
         this.message = message;
+    }
+
+    @Override
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    @Override
+    public int getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
     }
 }

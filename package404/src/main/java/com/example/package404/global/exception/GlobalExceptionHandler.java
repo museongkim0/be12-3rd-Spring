@@ -1,9 +1,9 @@
-package com.example.package404.exception;
+package com.example.package404.global.exception;
 
-import com.example.package404.response.BaseResponse;
-import com.example.package404.response.BaseResponseService;
-import com.example.package404.response.BaseResponseStatus;
-import com.example.package404.response.CommonResponseStatus;
+import com.example.package404.global.response.BaseResponse;
+import com.example.package404.global.response.BaseResponseService;
+import com.example.package404.global.response.responseStatus.BaseResponseStatus;
+import com.example.package404.global.response.responseStatus.CommonResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

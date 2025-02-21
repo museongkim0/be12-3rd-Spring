@@ -1,5 +1,6 @@
-package com.example.package404.response;
+package com.example.package404.global.response;
 
+import com.example.package404.global.response.responseStatus.BaseResponseStatus;
 import org.springframework.stereotype.Service;
 
 /**

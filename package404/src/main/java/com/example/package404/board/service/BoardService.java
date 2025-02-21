@@ -6,15 +6,12 @@ import com.example.package404.board.model.Dto.BoardReadResponseDto;
 import com.example.package404.board.model.Dto.BoardRequestDto;
 import com.example.package404.board.model.Dto.BoardResponseDto;
 import com.example.package404.board.repository.BoardJpaRepository;
-import com.example.package404.exception.BoardException;
-import com.example.package404.response.BaseResponseServiceImpl;
-import com.example.package404.response.BoardResponseStatus;
+import com.example.package404.global.exception.BoardException;
+import com.example.package404.global.response.responseStatus.BoardResponseStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

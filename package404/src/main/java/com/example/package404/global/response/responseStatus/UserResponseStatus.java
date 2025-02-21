@@ -1,9 +1,10 @@
-package com.example.package404.response;
+package com.example.package404.global.response.responseStatus;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Getter;
 
 @Getter
-public enum UserResponseStatus {
+public enum UserResponseStatus implements BaseResponseStatus {
     // 2000번대 - User 관련 에러
     USER_NOT_FOUND(false, 2001, "사용자를 찾을 수 없습니다."),
     DUPLICATE_USER(false, 2002, "이미 존재하는 사용자입니다."),
@@ -19,21 +20,29 @@ public enum UserResponseStatus {
     EMAIL_ALREADY_IN_USE(false, 2012, "해당 이메일은 이미 사용 중입니다."),
     PHONE_NUMBER_ALREADY_IN_USE(false, 2013, "해당 전화번호는 이미 사용 중입니다.");
 
-    private boolean isSuccess; // 성공 여부
-    private String message; // 메시지
-    private int code; // 코드
 
-    /*
-     * BaseResponseStatus 에서 해당하는 코드를 매핑
-     *
-     * @param isSuccess
-     * @param code
-     * @param message
-     */
+    private final boolean isSuccess;
+    private final int code;
+    private final String message;
+
     UserResponseStatus(boolean isSuccess, int code, String message) {
         this.isSuccess = isSuccess;
         this.code = code;
         this.message = message;
     }
 
+    @Override
+    public boolean isSuccess() {
+        return isSuccess;
+    }
+
+    @Override
+    public int getCode() {
+        return code;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 }

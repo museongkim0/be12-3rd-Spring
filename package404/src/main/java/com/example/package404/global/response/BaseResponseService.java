@@ -1,4 +1,6 @@
-package com.example.package404.response;
+package com.example.package404.global.response;
+
+import com.example.package404.global.response.responseStatus.BaseResponseStatus;
 
 /**
  * BaseResponse를 반환하는 서비스 인터페이스
