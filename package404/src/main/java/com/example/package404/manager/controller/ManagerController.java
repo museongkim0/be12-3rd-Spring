@@ -1,5 +1,6 @@
 package com.example.package404.manager.controller;
 
+import com.example.package404.instructor.model.dto.res.InstructorResponseDto;
 import com.example.package404.manager.model.dto.ManagerResponseDto;
 import com.example.package404.manager.model.dto.TestRequestDto;
 import com.example.package404.manager.model.dto.TestResponseDto;
