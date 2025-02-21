@@ -15,7 +15,8 @@ public enum BoardResponseStatus implements BaseResponseStatus {
     POST_CREATION_FAILED(false, 6008, "게시글 작성에 실패했습니다."),
     COMMENT_CREATION_FAILED(false, 6009, "댓글 작성에 실패했습니다."),
     POST_ACCESS_DENIED(false, 6010, "게시글에 접근할 권한이 없습니다."),
-    COMMENT_ACCESS_DENIED(false, 6011, "댓글에 접근할 권한이 없습니다.");
+    COMMENT_ACCESS_DENIED(false, 6011, "댓글에 접근할 권한이 없습니다."),
+    INVALID_PAGE(false, 6012, "잘못된 페이지 접근 입니다.");
 
     private final boolean isSuccess;
     private final int code;

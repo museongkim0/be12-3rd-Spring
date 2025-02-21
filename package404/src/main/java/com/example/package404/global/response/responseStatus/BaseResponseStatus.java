@@ -8,7 +8,7 @@ enum은 일정한 개수의 상수를 하나의 그룹으로 묶어서 관리하
 자바에서는 enum을 클래스로 관리하며, 변수와 메서드를 가질 수 있음
 */
 
-// ✅ 인터페이스로 변환
+// 인터페이스로 변환
 public interface BaseResponseStatus {
     boolean isSuccess();
     int getCode();

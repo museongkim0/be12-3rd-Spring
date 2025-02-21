@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * ✅ 전역 예외 핸들러
+ *  전역 예외 핸들러
  */
 @RestControllerAdvice
 @RequiredArgsConstructor
