@@ -1,39 +1,30 @@
-package com.example.package404.board.model;
+package com.example.package404.comment.model;
 
-import com.example.package404.comment.model.Comment;
+import com.example.package404.board.model.Board;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Board {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
-    private String title;
     private String content;
-    // Join으로 바꿔야함
     private String writer;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-    // 0 = 공지 게시판 / 1 = 일반 게시판
-    private int boardType;
 
-    @OneToMany(mappedBy = "board")
-    private List<Comment> comments;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_idx")
+    private Board board;
 
 }
-
-
-
