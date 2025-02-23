@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,6 +27,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String name;
+    private LocalDate birth;
     private String role;
 
     @OneToOne(mappedBy = "user")
