@@ -2,8 +2,9 @@ package com.example.package404.instructor.service;
 
 
 import com.example.package404.instructor.model.Course;
-import com.example.package404.instructor.model.dto.CourseRegister;
-import com.example.package404.instructor.model.dto.CourseResDto;
+import com.example.package404.instructor.model.Instructor;
+import com.example.package404.instructor.model.dto.req.CourseRegister;
+import com.example.package404.instructor.model.dto.res.CourseResponseDto;
 import com.example.package404.instructor.repository.CourseRepository;
 import com.example.package404.instructor.repository.CurriculumRepository;
 import com.example.package404.user.model.User;
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 public class CourseService {
     private final CourseRepository courseRepository;
     private final CurriculumRepository curriculumRepository;
+    private final InstructorService instructorService;
 
 
     @Transactional
     public void register(CourseRegister dto, User user) {
+        System.out.println(user.getIdx());
         Course course = courseRepository.save(dto.toEntity(user));
 
         dto.getCurriculumList().forEach(Course_CurriculumRegisterDto -> {
@@ -37,15 +40,15 @@ public class CourseService {
 //    }
 
     @Transactional(readOnly = true)
-    public List<CourseResDto> list() {
+    public List<CourseResponseDto> list() {
         List <Course> result = courseRepository.findAll();
-        return result.stream().map(CourseResDto::from).collect(Collectors.toList());
+        return result.stream().map(CourseResponseDto::from).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public CourseResDto read(Long courseIdx) {
+    public CourseResponseDto read(Long courseIdx) {
         Course course = courseRepository.findById(courseIdx).orElseThrow();
-        return CourseResDto.from(course);
+        return CourseResponseDto.from(course);
     }
 
 

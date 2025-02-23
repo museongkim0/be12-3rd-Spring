@@ -1,9 +1,7 @@
 package com.example.package404.instructor.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.package404.user.model.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,13 +14,21 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Instructor {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
+    private Long userIdx; // user의 PK를 Instructor의 PK로 사용
 
     private String record;
-
     private String portfolio;
 
 
+
+
+
+    @OneToOne
+    @JoinColumn(name = "user_idx")
+    private User user;
+
+
+    @OneToOne(mappedBy = "instructor")
+    private Course course;
 
 }

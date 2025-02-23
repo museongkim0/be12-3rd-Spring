@@ -1,11 +1,8 @@
 package com.example.package404.user.model;
 
-import com.example.package404.instructor.model.Instructor;
+import com.example.package404.student.model.StudentDetail;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,15 +11,15 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Builder
+@Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Entity
+@Builder
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,19 +30,11 @@ public class User implements UserDetails {
     private LocalDate birth;
     private String role;
 
+    @OneToOne(mappedBy = "user")
+    private StudentDetail studentDetail;
 
-    @OneToMany(mappedBy = "user")
-    private List<Instructor> courseList = new ArrayList<>();
-
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
-
-        authorities.add(authority);
-        return authorities;
-    }
+    @ElementCollection(fetch = FetchType.EAGER) // 다중 권한 저장
+    private List<String> roles = new ArrayList<>();
 
     @Override
     public boolean isAccountNonExpired() {
@@ -57,10 +46,28 @@ public class User implements UserDetails {
         return email;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        Collection<GrantedAuthority> authorities = new ArrayList<>();
+//        GrantedAuthority authority = new SimpleGrantedAuthority(role);
+////        GrantedAuthority authority = new GrantedAuthority() {
+////            @Override
+////            public String getAuthority() {
+////                return role;
+////            }
+////        };
+//
+//        authorities.add(authority);
+//        return authorities;
+//    }
+
+@Override
+public Collection<? extends GrantedAuthority> getAuthorities() {
+    return roles.stream()
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
+}
+
 
     @Override
     public boolean isCredentialsNonExpired() {
@@ -69,6 +76,11 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
         return true;
     }
 }

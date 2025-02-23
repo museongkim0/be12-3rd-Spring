@@ -1,6 +1,7 @@
 package com.example.package404.instructor.model;
 
 
+import com.example.package404.manager.model.Test;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,8 +26,10 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private List<Curriculum> sectionList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "course")
+    private List<Test> testList = new ArrayList<>();
 
-//    @ManyToOne
-//    @JoinColumn(name="user_idx")
-//    private User user;
+    @OneToOne
+    @JoinColumn(name="user_idx")
+    private Instructor instructor;
 }
