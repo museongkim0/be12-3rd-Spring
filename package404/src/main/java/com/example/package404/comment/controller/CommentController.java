@@ -20,7 +20,7 @@ public class CommentController {
     @PostMapping("/register/{boardIdx}")
     // 작성자 이름 받아오는 코드 추가 해야함
     public BaseResponse<Object> register(@PathVariable int boardIdx, @RequestBody CommentRequestDto dto) {
-        commentService.register(dto);
+        // commentService.register(dto);
         return baseResponseService.getSuccessResponse(CommonResponseStatus.CREATED);
     }
 
