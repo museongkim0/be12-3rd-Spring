@@ -1,9 +1,9 @@
 package com.example.package404.board.controller;
 
-import com.example.package404.board.model.Dto.BoardPageResponse;
-import com.example.package404.board.model.Dto.BoardReadResponseDto;
-import com.example.package404.board.model.Dto.BoardRequestDto;
-import com.example.package404.board.model.Dto.BoardResponseDto;
+import com.example.package404.board.model.dto.BoardPageResponse;
+import com.example.package404.board.model.dto.BoardReadResponseDto;
+import com.example.package404.board.model.dto.BoardRequestDto;
+import com.example.package404.board.model.dto.BoardResponseDto;
 import com.example.package404.board.service.BoardService;
 import com.example.package404.global.response.BaseResponse;
 import com.example.package404.global.response.BaseResponseServiceImpl;

@@ -1,10 +1,10 @@
 package com.example.package404.board.service;
 
 import com.example.package404.board.model.Board;
-import com.example.package404.board.model.Dto.BoardPageResponse;
-import com.example.package404.board.model.Dto.BoardReadResponseDto;
-import com.example.package404.board.model.Dto.BoardRequestDto;
-import com.example.package404.board.model.Dto.BoardResponseDto;
+import com.example.package404.board.model.dto.BoardPageResponse;
+import com.example.package404.board.model.dto.BoardReadResponseDto;
+import com.example.package404.board.model.dto.BoardRequestDto;
+import com.example.package404.board.model.dto.BoardResponseDto;
 import com.example.package404.board.repository.BoardJpaRepository;
 import com.example.package404.global.exception.BoardException;
 import com.example.package404.global.response.responseStatus.BoardResponseStatus;
