@@ -1,13 +1,11 @@
 package com.example.package404.user.model.Dto;
 
+
 import com.example.package404.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
 
 public class UserRequestDto {
 
@@ -20,7 +18,7 @@ public class UserRequestDto {
         private LocalDate birth;
         private String role;
 
-        public User toEntity(String encodedPassword, String role) {
+        public User toEntity(String encodedPassword, String instructor) {
             return User.builder()
                     .email(email)
                     .password(encodedPassword)
@@ -31,5 +29,3 @@ public class UserRequestDto {
         }
     }
 }
-
-

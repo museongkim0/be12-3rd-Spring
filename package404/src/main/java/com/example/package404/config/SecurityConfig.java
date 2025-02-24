@@ -22,7 +22,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
     private final AuthenticationConfiguration configuration;
-    private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
 
     @Bean
@@ -36,7 +35,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, UserService userService) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())  // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
@@ -44,7 +43,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()  // 나머지는 인증 필요
                 )
                 .addFilterAt(new LoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)  // 로그인 필터 추가
-                .addFilterBefore(new JwtFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class);  // JWT 필터 추가
+                .addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class);  // JWT 필터 추가
 
         return http.build();
     }
