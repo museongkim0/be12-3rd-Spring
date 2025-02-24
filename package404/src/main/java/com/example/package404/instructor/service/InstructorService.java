@@ -29,13 +29,13 @@ public class InstructorService {
 
         return null;
     }
-//    public Instructor getInstructorId(Long useridx){
-//        Optional<Instructor> instructor = instructorRepository.findById(useridx);
-//        if(instructor.isPresent()) {
-//            return InstructorIdDto.from(instructor.get());
-//        }
-//        return null;
-//    }
+    public Instructor getInstructorId(Long useridx){
+        Optional<Instructor> instructor = instructorRepository.findById(useridx);
+        if(instructor.isPresent()) {
+            return InstructorIdDto.from(instructor.get());
+        }
+        return null;
+    }
 
     public void setinfo(InstructorRequestDto dto, User user) {
         instructorRepository.save(dto.toEntity(user));

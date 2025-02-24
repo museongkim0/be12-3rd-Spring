@@ -1,9 +1,13 @@
 package com.example.package404.instructor.controller;
 
+import com.example.package404.instructor.model.Course;
+import com.example.package404.instructor.model.Instructor;
 import com.example.package404.instructor.model.dto.req.CourseRegister;
 import com.example.package404.instructor.model.dto.res.CourseResponseDto;
+import com.example.package404.instructor.repository.CourseRepository;
 import com.example.package404.instructor.service.CourseService;
 import com.example.package404.user.model.User;
+import com.example.package404.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,13 +22,16 @@ public class CourstController {
 
     private final CourseService courseService;
 
-
+    private final UserRepository userRepository;
+    private final CourseRepository courseRepository;
 
 
     @PostMapping("/register")
     public void register(/*@AuthenticationPrincipal User user,*/ @RequestBody CourseRegister dto) {
-        User user = new User();
-        user.setIdx(3L);
+
+        //임시 유저 생성
+        User user = userRepository.findById(3L).orElseThrow(() -> new RuntimeException("User not found"));
+
         courseService.register(dto, user);
     }
 
@@ -40,5 +47,7 @@ public class CourstController {
         CourseResponseDto response = courseService.read(courseIdx);
         return ResponseEntity.ok(response);
     }
+
+
 
 }

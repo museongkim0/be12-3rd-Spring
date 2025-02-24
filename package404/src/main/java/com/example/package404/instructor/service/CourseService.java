@@ -25,8 +25,9 @@ public class CourseService {
 
     @Transactional
     public void register(CourseRegister dto, User user) {
-        System.out.println(user.getIdx());
-        Course course = courseRepository.save(dto.toEntity(user));
+        Instructor instructor = instructorService.getInstructorId(user.getIdx());
+
+        Course course = courseRepository.save(dto.toEntity(instructor));
 
         dto.getCurriculumList().forEach(Course_CurriculumRegisterDto -> {
             curriculumRepository.save(Course_CurriculumRegisterDto.toEntity(course));
@@ -41,7 +42,7 @@ public class CourseService {
 
     @Transactional(readOnly = true)
     public List<CourseResponseDto> list() {
-        List <Course> result = courseRepository.findAll();
+        List<Course> result = courseRepository.findAll();
         return result.stream().map(CourseResponseDto::from).collect(Collectors.toList());
     }
 
@@ -52,7 +53,10 @@ public class CourseService {
     }
 
 
+    public Course getCourse(Long courseIdx) {
 
+        return courseRepository.findById(courseIdx).orElseThrow();
+    }
 
 
 }
