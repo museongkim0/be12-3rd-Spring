@@ -22,6 +22,7 @@ public class BoardController {
 
     @PostMapping("/register/{boardType}")
     public BaseResponse<Object> register(@AuthenticationPrincipal User loginUser, @RequestBody BoardRequestDto boardRequestDto, @PathVariable int boardType) {
+        System.out.println("유저 잘나옴 >? : " + loginUser);
         BoardResponseDto response = boardService.register(loginUser, boardRequestDto, boardType);
         return baseResponseService.getSuccessResponse(response, CommonResponseStatus.CREATED);
     }
