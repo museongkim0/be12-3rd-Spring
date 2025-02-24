@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-    private final UserService userService;
+  private final UserService userService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserRequestDto.SignupRequest dto) {
+    @PostMapping("/signup/{role}")
+    public ResponseEntity<String> signup(@RequestBody UserRequestDto.SignupRequest dto, @PathVariable String role) {
         try {
-            userService.signup(dto);
+            userService.signup(dto, role);
             return ResponseEntity.status(201).body("회원가입이 완료되었습니다.");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(e.getMessage());
@@ -26,4 +26,5 @@ public class UserController {
             return ResponseEntity.status(500).body("서버 오류가 발생했습니다.");
         }
     }
+
 }
