@@ -39,16 +39,18 @@ public class User implements UserDetails {
     private String password;
     private String name;
     private LocalDate birth;
-
     private boolean enabled;
     private String role;
 
     @OneToOne(mappedBy = "user")
     private StudentDetail studentDetail;
 
+//    @OneToOne(mappedBy = "user")
+//    private ManagerDetail managerDetail;
 
-    @ElementCollection(fetch = FetchType.EAGER) // 다중 권한 저장
-    private List<String> roles = new ArrayList<>();
+
+//    @ElementCollection(fetch = FetchType.EAGER) // 다중 권한 저장
+//    private List<String> roles = new ArrayList<>();
 
 
     @Override
@@ -76,7 +78,7 @@ public class User implements UserDetails {
     User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + email));
 
-    return user; // `User`가 `UserDetails`를 구현하므로 그대로 반환 가능
+    return user;
 }
 
 
