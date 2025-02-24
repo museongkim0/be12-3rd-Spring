@@ -10,6 +10,7 @@ import lombok.*;
 
 
 import org.apache.catalina.Role;
+import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,8 +41,9 @@ public class User implements UserDetails {
     private String password;
     private String name;
     private LocalDate birth;
-    private String role;
+
     private boolean enabled;
+    private String role;
 
     @OneToOne(mappedBy = "user")
     private StudentDetail studentDetail;
@@ -58,6 +60,7 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER) // 다중 권한 저장
     private List<String> roles = new ArrayList<>();
 
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -71,20 +74,15 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        GrantedAuthority authority = new SimpleGrantedAuthority(role);
-//        GrantedAuthority authority = new GrantedAuthority() {
-//            @Override
-//            public String getAuthority() {
-//                return role;
-//            }
-//        };
+        GrantedAuthority authority = new SimpleGrantedAuthority(email);
 
         authorities.add(authority);
         return authorities;
     }
 
 
-public static UserDetails loadUserByEmail(String email, UserRepository userRepository) throws UsernameNotFoundException {
+
+    public static UserDetails loadUserByEmail(String email, UserRepository userRepository) throws UsernameNotFoundException {
     User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + email));
 

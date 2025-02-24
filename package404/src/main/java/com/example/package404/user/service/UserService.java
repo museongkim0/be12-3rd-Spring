@@ -20,12 +20,12 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+
     @Transactional
-    public void signup(UserRequestDto.SignupRequest dto) {
+    public void signup(UserRequestDto.SignupRequest dto, String role) {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
 
         User user= userRepository.save(dto.toEntity(encodedPassword, "USER"));
-
 
 
     }
@@ -34,6 +34,13 @@ public class UserService implements UserDetailsService {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
 
         userRepository.save(dto.toEntity(encodedPassword, "INSTRUCTOR"));
+    }
+
+    @Transactional
+    public void managerSignup(UserRequestDto.SignupRequest dto) {
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+
+        userRepository.save(dto.toEntity(encodedPassword, "MANAGER"));
     }
 
     @Override
