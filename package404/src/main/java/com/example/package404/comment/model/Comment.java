@@ -20,7 +20,6 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
     private String content;
-    private String writer;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 

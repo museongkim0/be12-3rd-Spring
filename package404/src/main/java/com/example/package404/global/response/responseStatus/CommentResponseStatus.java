@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum CommentResponseStatus implements BaseResponseStatus {
     // 7000번대 - Comment 관련 에러
     COMMENT_NOT_FOUND(false, 7001, "댓글을 찾을 수 없습니다."),
-    DUPLICATE_COMMENT(false, 7002, "이미 존재하는 댓글입니다."),
+    INVALID_BOARD_ID(false, 7002, "댓글을 작성할 수 없는 게시글 입니다.."),
     INVALID_COMMENT_ID(false, 7003, "잘못된 댓글 ID입니다."),
     COMMENT_CREATION_FAILED(false, 7004, "댓글 작성에 실패했습니다."),
     COMMENT_UPDATE_FAILED(false, 7005, "댓글 수정에 실패했습니다."),

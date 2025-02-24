@@ -1,13 +1,17 @@
 package com.example.package404.comment.controller;
 
 import com.example.package404.comment.model.dto.CommentRequestDto;
+import com.example.package404.comment.model.dto.CommentResponseDto;
 import com.example.package404.comment.service.CommentService;
 import com.example.package404.global.response.BaseResponse;
 import com.example.package404.global.response.BaseResponseService;
 import com.example.package404.global.response.responseStatus.BaseResponseStatus;
 import com.example.package404.global.response.responseStatus.CommonResponseStatus;
+import com.example.package404.global.response.responseStatus.UserResponseStatus;
 import com.example.package404.user.model.User;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +21,19 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
     private final CommentService commentService;
     private final BaseResponseService baseResponseService;
-
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @PostMapping("/register/{boardIdx}")
-    // 작성자 이름 받아오는 코드 추가 해야함
-    public BaseResponse<Object> register(@AuthenticationPrincipal User user, @PathVariable int boardIdx, @RequestBody CommentRequestDto dto) {
-        System.out.println("유저 나옴 ? "+user + "이메일 ? " +user.getEmail());
-        //commentService.register(dto);
-        return baseResponseService.getSuccessResponse(CommonResponseStatus.CREATED);
+    public BaseResponse<Object> register(@AuthenticationPrincipal User loginUser, @PathVariable Long boardIdx, @RequestBody CommentRequestDto dto) {
+        if (loginUser == null) {
+            log.warn("로그인된 사용자 없음");
+            return baseResponseService.getFailureResponse(UserResponseStatus.USER_NOT_FOUND);
+        }
+
+        log.info("유저 정보: {} (이메일: {})", loginUser, loginUser.getEmail());
+
+        CommentResponseDto response = commentService.register(loginUser, boardIdx, dto);
+        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.CREATED);
     }
 
     //
