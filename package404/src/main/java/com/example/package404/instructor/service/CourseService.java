@@ -41,7 +41,7 @@ public class CourseService {
 
     @Transactional(readOnly = true)
     public List<CourseResponseDto> list() {
-        List <Course> result = courseRepository.findAll();
+        List<Course> result = courseRepository.findAllWithAssociations();
         return result.stream().map(CourseResponseDto::from).collect(Collectors.toList());
     }
 
