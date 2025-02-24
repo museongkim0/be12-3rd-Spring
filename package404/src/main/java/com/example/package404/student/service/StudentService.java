@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -24,19 +25,39 @@ public class StudentService {
     }
 
     public List<StudentResponseDto> list() {
-        List<User> studentList = userRepository.findByRoleEquals("ROLE_STUDENT");
+//        List<User> studentList = userRepository.findByRoleEquals("ROLE_STUDENT");
+        List<StudentDetail> studentList = studentRepository.findAllStudents();
         return studentList.stream().map(StudentResponseDto::from).collect(Collectors.toList());
     }
 
     public StudentResponseDto read(Long idx) {
-        User user = userRepository.findById(idx).orElseThrow();
+        StudentDetail student = studentRepository.findByStudent(idx).orElseThrow();
 
-        return StudentResponseDto.from(user);
+        return StudentResponseDto.from(student);
     }
 
     public void update(User user, String action) {
-        StudentDetail studentDetail = studentRepository.findByUserIdx(user);
+        User findUser = userRepository.findById(user.getIdx()).orElseThrow();
+        StudentDetail studentDetail = studentRepository.findById(findUser.getStudentDetail().getIdx()).orElseThrow();
 
-        studentRepository.save(StudentDetailUpdateDto.toEntity(studentDetail, action));
+        if (action.equals("testStatus")) {
+            studentDetail.updateTestStatus();
+            studentRepository.save(studentDetail);
+        } else if (action.equals("perception")) {
+            studentDetail.updatePerception();
+            studentRepository.save(studentDetail);
+        } else if (action.equals("attendance")) {
+            studentDetail.updateAttendance();
+            studentRepository.save(studentDetail);
+        } else if (action.equals("leaveEarly")) {
+            studentDetail.updateLeaveEarly();
+            studentRepository.save(studentDetail);
+        } else if (action.equals("outing")) {
+            studentDetail.updateOuting();
+            studentRepository.save(studentDetail);
+        } else if (action.equals("vacationLeft")) {
+            studentDetail.updateVacationLeft();
+            studentRepository.save(studentDetail);
+        }
     }
 }
