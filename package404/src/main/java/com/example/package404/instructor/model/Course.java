@@ -2,7 +2,6 @@ package com.example.package404.instructor.model;
 
 
 import com.example.package404.manager.model.Test;
-import com.example.package404.student.model.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

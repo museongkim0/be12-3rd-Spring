@@ -4,7 +4,10 @@ import com.example.package404.user.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class UserRequestDto {
 
@@ -13,16 +16,20 @@ public class UserRequestDto {
     public static class SignupRequest {
         private String email;
         private String password;
+        private String name;
+        private LocalDate birth;
+        private String role;
 
-        public User toEntity(String encodedPassword, List<String> roles) {
+        public User toEntity(String encodedPassword, String role) {
             return User.builder()
                     .email(email)
                     .password(encodedPassword)
-                    .roles(roles) // 여러 개의 권한을 저장할 수 있도록 수정
+                    .name(name)
+                    .birth(birth)
+                    .role(role)
                     .build();
         }
-
     }
-
-
 }
+
+

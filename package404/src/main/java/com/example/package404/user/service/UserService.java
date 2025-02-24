@@ -1,9 +1,9 @@
 package com.example.package404.user.service;
 
 import com.example.package404.user.model.User;
+
 import com.example.package404.user.repository.UserRepository;
 import com.example.package404.user.model.Dto.UserRequestDto;
-import com.example.package404.user.model.Dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,24 +12,43 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // 회원가입 (Signup)
+    @Transactional
     public void signup(UserRequestDto.SignupRequest dto) {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
 
-        userRepository.save(dto.toEntity(encodedPassword, dto.getroles())); // roles 추가
+        User user= userRepository.save(dto.toEntity(encodedPassword, "USER"));
+
+
+
+    }
+    @Transactional
+    public void instructorSignup(UserRequestDto.SignupRequest dto) {
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+
+        userRepository.save(dto.toEntity(encodedPassword, "INSTRUCTOR"));
     }
 
-    // 사용자 정보 로드 (Spring Security)
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
-        return user;
+        Optional<User> result = userRepository.findByEmail(username);
+
+        if (result.isPresent()) {
+            // 7번 로직
+            User user = result.get();
+            return user;
+        }
+
+        return null;
     }
+
+
 }

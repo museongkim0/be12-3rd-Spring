@@ -42,4 +42,17 @@ public class StudentController {
         List<StudentResponseDto> studentResList = studentService.list();
         return ResponseEntity.ok(studentResList);
     }
+
+    @GetMapping("/update/{action}")
+    public ResponseEntity<String> update(/*@AuthenticationPrincipal User user,*/ @PathVariable String action) {
+        User user = new User();
+        user.setIdx(2L);
+        user.setEmail("test2@test.com");
+        user.setPassword("qwer1234");
+        user.setName("lee");
+        user.setRole("ROLE_STUDENT");
+        studentService.update(user, action);
+
+        return ResponseEntity.ok("success");
+    }
 }
