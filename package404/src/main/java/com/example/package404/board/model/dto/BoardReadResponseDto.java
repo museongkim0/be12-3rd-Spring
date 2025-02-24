@@ -1,4 +1,4 @@
-package com.example.package404.board.model.Dto;
+package com.example.package404.board.model.dto;
 
 import com.example.package404.board.model.Board;
 import lombok.AllArgsConstructor;
