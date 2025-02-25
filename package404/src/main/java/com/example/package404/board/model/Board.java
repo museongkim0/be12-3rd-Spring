@@ -23,11 +23,9 @@ public class Board {
     private Long idx;
     private String title;
     private String content;
-    // Join으로 바꿔야함
-    private String writer;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
-    // 0 = 공지 게시판 / 1 = 일반 게시판
+    // 0 = 공지 게시판 / 1 = 일반 게시판 /
     private int boardType;
 
     @OneToMany(mappedBy = "board")

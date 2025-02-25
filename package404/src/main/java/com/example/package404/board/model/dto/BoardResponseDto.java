@@ -18,7 +18,7 @@ public class BoardResponseDto {
     private LocalDateTime createdDate;
 
     public static BoardResponseDto from(Board board) {
-        return BoardResponseDto.builder().title(board.getTitle()).writer(board.getWriter()).createdDate(board.getCreatedDate()).build();
+        return BoardResponseDto.builder().title(board.getTitle()).writer(board.getUser().getName()).createdDate(board.getCreatedDate()).build();
     }
 
 }
