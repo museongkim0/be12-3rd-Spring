@@ -30,7 +30,7 @@ public class CourseResponseDto {
                 .idx(course.getIdx())
                 .name(course.getName())
                 .generation(course.getGeneration())
-                .curriculumList(course.getSectionList().stream().map(CurriculumResponseDto::from).collect(Collectors.toList()))
+                .curriculumList(course.getCurriculumList().stream().map(CurriculumResponseDto::from).collect(Collectors.toList()))
                 .build();
     }
 

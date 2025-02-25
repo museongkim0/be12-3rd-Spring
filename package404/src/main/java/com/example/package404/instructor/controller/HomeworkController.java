@@ -24,8 +24,10 @@ public class HomeworkController {
         homeworkService.homeworkCreate(courseIdx , homeworkReqDto);
     }
 
-    @GetMapping("/")
+    @GetMapping("/list")
     public void listHomework(@PathVariable Long courseIdx) {
+
+        homeworkService.findAll();
 
 
     }

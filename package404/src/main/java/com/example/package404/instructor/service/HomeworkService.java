@@ -23,16 +23,13 @@ public class HomeworkService {
     public void homeworkCreate(Long courseIdx , HomeworkReqDto dto) {
 
         Course course = courseService.getCourse(courseIdx);
-
-
         homeworkRepository.save(dto.toEntity(course));
-
-
-
 
     }
 
 
+    public void findAll() {
 
-
+        homeworkRepository.findAll();
+    }
 }

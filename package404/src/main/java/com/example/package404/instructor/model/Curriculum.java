@@ -19,8 +19,6 @@ public class Curriculum {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
-    private String name;
-
     private LocalDate curriculumDate;
     private int curriculumDay;
     private String curriculumSubject;
