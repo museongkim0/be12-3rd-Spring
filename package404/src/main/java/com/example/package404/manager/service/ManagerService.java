@@ -9,6 +9,9 @@ import com.example.package404.manager.model.dto.TestRequestDto;
 import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.repository.ManagerRepository;
 import com.example.package404.manager.repository.TestRepository;
+import com.example.package404.student.model.Dto.StudentDetailResponseDto;
+import com.example.package404.student.model.Dto.StudentResponseDto;
+import com.example.package404.student.model.StudentDetail;
 import com.example.package404.student.repository.StudentRepository;
 import com.example.package404.user.model.Dto.UserResponseDto;
 import com.example.package404.user.model.User;
@@ -27,7 +30,7 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final TestRepository testRepository;
 
-    public List<ManagerResponseDto> getList() {
+    public List<ManagerResponseDto> getManagerList() {
         List<User> managerList = managerRepository.findAll();
 
         return managerList.stream().map(ManagerResponseDto::of).toList();
@@ -50,9 +53,15 @@ public class ManagerService {
     }
 
     public List<InstructorResponseDto> getInstructorList() {
-        List<Instructor> managerList = instructorRepository.findAll();
+        List<Instructor> instructorList = instructorRepository.findAll();
 
-        return managerList.stream().map(InstructorResponseDto::from).toList();
+        return instructorList.stream().map(InstructorResponseDto::from).toList();
+    }
+
+    public List<StudentDetailResponseDto> getStudentList() {
+        List<StudentDetail> studentList = studentRepository.findAll();
+
+        return studentList.stream().map(StudentDetailResponseDto::from).toList();
     }
 
     public TestResponseDto registerTest(TestRequestDto dto){
