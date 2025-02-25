@@ -9,7 +9,7 @@ import com.example.package404.manager.model.dto.TestRequestDto;
 import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.repository.ManagerRepository;
 import com.example.package404.manager.repository.TestRepository;
-import com.example.package404.user.model.Dto.UserRequestDto;
+import com.example.package404.student.repository.StudentRepository;
 import com.example.package404.user.model.Dto.UserResponseDto;
 import com.example.package404.user.model.User;
 import com.example.package404.user.repository.UserRepository;
@@ -21,10 +21,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ManagerService {
+    private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
+    private final InstructorRepository instructorRepository;
     private final ManagerRepository managerRepository;
     private final TestRepository testRepository;
-    private final InstructorRepository instructorRepository;
-    //private final UserRepository userRepository;
 
     public List<ManagerResponseDto> getList() {
         List<User> managerList = managerRepository.findAll();
@@ -38,15 +39,20 @@ public class ManagerService {
         return ManagerResponseDto.of(manager);
     }
 
-//    public UserResponseDto getUser(Long userIdx) {
-//        User user = userRepository.findById(userIdx).orElseThrow();
-//        return UserResponseDto.of(user);
-//    }
+    public UserResponseDto.SignupResponse getUser(Long userIdx) {
+        User user = userRepository.findById(userIdx).orElseThrow();
+        return UserResponseDto.SignupResponse.from(user);
+    }
 
-    public InstructorResponseDto getInstructor(Long instructorIdx) {
-        //return instructorService.getInstructor(instructorIdx);
-        Instructor instructor =  instructorRepository.findById(instructorIdx).orElseThrow();
+    public InstructorResponseDto getInstructorByEmail(String instructorIdx) {
+        Instructor instructor =  instructorRepository.findByEmail(instructorIdx).orElseThrow();
         return InstructorResponseDto.from(instructor);
+    }
+
+    public List<InstructorResponseDto> getInstructorList() {
+        List<Instructor> managerList = instructorRepository.findAll();
+
+        return managerList.stream().map(InstructorResponseDto::from).toList();
     }
 
     public TestResponseDto registerTest(TestRequestDto dto){
@@ -74,4 +80,11 @@ public class ManagerService {
 
         return TestResponseDto.of(test);
     }
+
+    public List<TestResponseDto> getTestList() {
+        List<Test> testList = testRepository.findAllWithCourse();
+
+        return testList.stream().map(TestResponseDto::of).toList();
+    }
+
 }

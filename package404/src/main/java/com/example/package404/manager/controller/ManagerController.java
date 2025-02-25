@@ -6,7 +6,6 @@ import com.example.package404.manager.model.dto.TestRequestDto;
 import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.service.ManagerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +30,16 @@ public class ManagerController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/instructor/{instructorIdx}")
-    public ResponseEntity<InstructorResponseDto> findInstructor(@PathVariable Long instructorIdx) {
-        InstructorResponseDto response = managerService.getInstructor(instructorIdx);
+    @GetMapping("/instructor/{instructorEmail}")
+    public ResponseEntity<InstructorResponseDto> findInstructor(@PathVariable String instructorEmail) {
+        InstructorResponseDto response = managerService.getInstructorByEmail(instructorEmail);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/instructor/list")
+    public ResponseEntity<List<InstructorResponseDto>> instructorList() {
+        List<InstructorResponseDto> response = managerService.getInstructorList();
+
         return ResponseEntity.ok(response);
     }
 
@@ -52,6 +58,13 @@ public class ManagerController {
     @PostMapping("/test/delete/{testIdx}")
     public ResponseEntity<TestResponseDto> deleteTest(Long testIdx) {
         TestResponseDto response = managerService.deleteTest(testIdx);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/test/list")
+    public ResponseEntity<List<TestResponseDto>> testList() {
+        List<TestResponseDto> response = managerService.getTestList();
+
         return ResponseEntity.ok(response);
     }
 }
