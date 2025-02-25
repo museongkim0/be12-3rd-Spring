@@ -1,12 +1,15 @@
 package com.example.package404.manager.controller;
 
+import com.example.package404.global.response.BaseResponse;
+import com.example.package404.global.response.BaseResponseServiceImpl;
+import com.example.package404.global.response.responseStatus.CommonResponseStatus;
 import com.example.package404.instructor.model.dto.res.InstructorResponseDto;
 import com.example.package404.manager.model.dto.ManagerResponseDto;
 import com.example.package404.manager.model.dto.TestRequestDto;
 import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.service.ManagerService;
+import com.example.package404.user.model.Dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,55 +19,50 @@ import java.util.List;
 @RequestMapping("/manager")
 public class ManagerController {
     private final ManagerService managerService;
+    private final BaseResponseServiceImpl baseResponseService;
 
     @GetMapping("/list")
-    public ResponseEntity<List<ManagerResponseDto>> list() {
-        List<ManagerResponseDto> response = managerService.getList();
+    public BaseResponse<Object> managerList() {
+        List<ManagerResponseDto> response = managerService.getManagerList();
 
-        return ResponseEntity.ok(response);
+        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
     }
 
     @GetMapping("/{managerIdx}")
-    public ResponseEntity<ManagerResponseDto> findManager(@PathVariable Long managerIdx) {
+    public BaseResponse<Object> findManager(@PathVariable Long managerIdx) {
         ManagerResponseDto response = managerService.getManager(managerIdx);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/instructor/{instructorEmail}")
-    public ResponseEntity<InstructorResponseDto> findInstructor(@PathVariable String instructorEmail) {
-        InstructorResponseDto response = managerService.getInstructorByEmail(instructorEmail);
-        return ResponseEntity.ok(response);
+        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
     }
 
     @GetMapping("/instructor/list")
-    public ResponseEntity<List<InstructorResponseDto>> instructorList() {
+    public BaseResponse<Object> instructorList() {
         List<InstructorResponseDto> response = managerService.getInstructorList();
 
-        return ResponseEntity.ok(response);
+        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
     }
 
     @PostMapping("/test/register")
-    public ResponseEntity<TestResponseDto> registerTest(@RequestBody TestRequestDto dto) {
+    public BaseResponse<Object> registerTest(@RequestBody TestRequestDto dto) {
         TestResponseDto response = managerService.registerTest(dto);
-        return ResponseEntity.ok(response);
+        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
     }
 
     @PostMapping("/test/update/{testIdx}")
-    public ResponseEntity<TestResponseDto> updateTest(Long testIdx, @RequestBody TestRequestDto dto) {
+    public BaseResponse<Object> updateTest(Long testIdx, @RequestBody TestRequestDto dto) {
         TestResponseDto response = managerService.updateTest(testIdx, dto);
-        return ResponseEntity.ok(response);
+        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
     }
 
     @PostMapping("/test/delete/{testIdx}")
-    public ResponseEntity<TestResponseDto> deleteTest(Long testIdx) {
+    public BaseResponse<Object> deleteTest(Long testIdx) {
         TestResponseDto response = managerService.deleteTest(testIdx);
-        return ResponseEntity.ok(response);
+        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
     }
 
     @GetMapping("/test/list")
-    public ResponseEntity<List<TestResponseDto>> testList() {
+    public BaseResponse<Object> testList() {
         List<TestResponseDto> response = managerService.getTestList();
 
-        return ResponseEntity.ok(response);
+        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
     }
 }
