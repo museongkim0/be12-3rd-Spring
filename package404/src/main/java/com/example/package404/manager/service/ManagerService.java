@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,11 +46,6 @@ public class ManagerService {
     public UserResponseDto.SignupResponse getUser(Long userIdx) {
         User user = userRepository.findById(userIdx).orElseThrow();
         return UserResponseDto.SignupResponse.from(user);
-    }
-
-    public InstructorResponseDto getInstructorByEmail(String instructorIdx) {
-        Instructor instructor =  instructorRepository.findByEmail(instructorIdx).orElseThrow();
-        return InstructorResponseDto.from(instructor);
     }
 
     public List<InstructorResponseDto> getInstructorList() {

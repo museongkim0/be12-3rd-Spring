@@ -8,6 +8,7 @@ import com.example.package404.manager.model.dto.ManagerResponseDto;
 import com.example.package404.manager.model.dto.TestRequestDto;
 import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.service.ManagerService;
+import com.example.package404.user.model.Dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +31,6 @@ public class ManagerController {
     @GetMapping("/{managerIdx}")
     public BaseResponse<Object> findManager(@PathVariable Long managerIdx) {
         ManagerResponseDto response = managerService.getManager(managerIdx);
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
-    }
-
-    @GetMapping("/instructor/{instructorEmail}")
-    public BaseResponse<Object> findInstructor(@PathVariable String instructorEmail) {
-        InstructorResponseDto response = managerService.getInstructorByEmail(instructorEmail);
         return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
     }
 
