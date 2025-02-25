@@ -14,7 +14,9 @@ public enum StudentResponseStatus implements BaseResponseStatus {
     COURSE_LIMIT_EXCEEDED(false, 3006, "학생이 신청할 수 있는 최대 강의 수를 초과했습니다."),
     STUDENT_ACCESS_DENIED(false, 3007, "학생이 접근할 수 없는 리소스입니다."),
     STUDENT_PROGRESS_NOT_FOUND(false, 3008, "학생의 학습 진행 정보를 찾을 수 없습니다."),
-    STUDENT_GRADE_NOT_FOUND(false, 3009, "학생의 성적 정보를 찾을 수 없습니다.");
+    STUDENT_GRADE_NOT_FOUND(false, 3009, "학생의 성적 정보를 찾을 수 없습니다."),
+    INVALID_PAGE(false, 3010, "잘못된 페이지 요청입니다. page, size를 확인해주세요."),
+    INVALID_UPDATE_ACTION(false, 3011, "잘못된 업데이트 요청입니다. action 값을 확인해주세요.");
 
     private final boolean isSuccess;
     private final int code;
