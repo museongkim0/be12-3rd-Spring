@@ -4,6 +4,7 @@ import com.example.package404.board.model.Board;
 import com.example.package404.comment.model.Comment;
 import com.example.package404.student.model.StudentDetail;
 import com.example.package404.user.repository.UserRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
@@ -37,6 +38,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
+    @Column(unique = true)
     private String email;
     private String password;
     private String name;
@@ -44,7 +46,8 @@ public class User implements UserDetails {
     private boolean enabled;
     private String role;
 
-    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = true)
     private StudentDetail studentDetail;
 
 
@@ -53,8 +56,8 @@ public class User implements UserDetails {
     private List<Board> boards;
 
     // 댓글이랑 관계 설정
-    @OneToMany(mappedBy = "user")
-    private List<Comment> comments;
+//    @OneToMany(mappedBy = "user")
+//    private List<Comment> comments;
 
 //    @ElementCollection(fetch = FetchType.EAGER) // 다중 권한 저장
 //    private List<String> roles = new ArrayList<>();
