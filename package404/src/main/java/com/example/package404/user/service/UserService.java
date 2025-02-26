@@ -1,5 +1,6 @@
 package com.example.package404.user.service;
 
+import com.example.package404.user.model.Dto.UserResponseDto;
 import com.example.package404.user.model.User;
 
 import com.example.package404.user.repository.UserRepository;
@@ -22,12 +23,12 @@ public class UserService implements UserDetailsService {
 
 
     @Transactional
-    public void signup(UserRequestDto.SignupRequest dto, String role) {
+    public UserResponseDto.SignupResponse signup(UserRequestDto.SignupRequest dto, String role) {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
 
-        User user= userRepository.save(dto.toEntity(encodedPassword, "USER"));
+        User user= userRepository.save(dto.toEntity(encodedPassword, role));
 
-
+        return UserResponseDto.SignupResponse.from(user);
     }
     @Transactional
     public void instructorSignup(UserRequestDto.SignupRequest dto) {

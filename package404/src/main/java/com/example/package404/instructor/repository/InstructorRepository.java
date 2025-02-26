@@ -21,5 +21,6 @@ public interface InstructorRepository extends JpaRepository<Instructor, Long> {
     @Query("SELECT DISTINCT i FROM Instructor i JOIN FETCH i.user u WHERE i.userIdx = :userIdx")
     Optional<Instructor> findDistinctInstructorByUserIdx(@Param("userIdx") Long userIdx);
 
+public interface InstructorRepository  extends JpaRepository<Instructor, Long> {
     Optional<Instructor> findById(Long userIdx);
 }

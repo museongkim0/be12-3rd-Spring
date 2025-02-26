@@ -16,10 +16,10 @@ public class UserController {
   private final UserService userService;
 
     @PostMapping("/signup/{role}")
-    public ResponseEntity<String> signup(@RequestBody UserRequestDto.SignupRequest dto, @PathVariable String role) {
+    public ResponseEntity<String> signup(@RequestBody UserRequestDto.SignupRequest dto, String role) {
         try {
-            userService.signup(dto, role);
-            return ResponseEntity.status(201).body("회원가입이 완료되었습니다.");
+            UserResponseDto.SignupResponse response = userService.signup(dto, role);
+            return ResponseEntity.status(201).body("회원가입이 완료되었습니다." + response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(400).body(e.getMessage());
         } catch (Exception e) {

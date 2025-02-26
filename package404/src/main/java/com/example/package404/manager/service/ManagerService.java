@@ -9,7 +9,10 @@ import com.example.package404.manager.model.dto.TestRequestDto;
 import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.repository.ManagerRepository;
 import com.example.package404.manager.repository.TestRepository;
-import com.example.package404.user.model.Dto.UserRequestDto;
+import com.example.package404.student.model.Dto.StudentDetailResponseDto;
+import com.example.package404.student.model.Dto.StudentResponseDto;
+import com.example.package404.student.model.StudentDetail;
+import com.example.package404.student.repository.StudentRepository;
 import com.example.package404.user.model.Dto.UserResponseDto;
 import com.example.package404.user.model.User;
 import com.example.package404.user.repository.UserRepository;
@@ -17,16 +20,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class ManagerService {
+    private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
+    private final InstructorRepository instructorRepository;
     private final ManagerRepository managerRepository;
     private final TestRepository testRepository;
-    private final InstructorRepository instructorRepository;
-    //private final UserRepository userRepository;
 
-    public List<ManagerResponseDto> getList() {
+    public List<ManagerResponseDto> getManagerList() {
         List<User> managerList = managerRepository.findAll();
 
         return managerList.stream().map(ManagerResponseDto::of).toList();
@@ -38,15 +43,21 @@ public class ManagerService {
         return ManagerResponseDto.of(manager);
     }
 
-//    public UserResponseDto getUser(Long userIdx) {
-//        User user = userRepository.findById(userIdx).orElseThrow();
-//        return UserResponseDto.of(user);
-//    }
+    public UserResponseDto.SignupResponse getUser(Long userIdx) {
+        User user = userRepository.findById(userIdx).orElseThrow();
+        return UserResponseDto.SignupResponse.from(user);
+    }
 
-    public InstructorResponseDto getInstructor(Long instructorIdx) {
-        //return instructorService.getInstructor(instructorIdx);
-        Instructor instructor =  instructorRepository.findById(instructorIdx).orElseThrow();
-        return InstructorResponseDto.from(instructor);
+    public List<InstructorResponseDto> getInstructorList() {
+        List<Instructor> instructorList = instructorRepository.findAll();
+
+        return instructorList.stream().map(InstructorResponseDto::from).toList();
+    }
+
+    public List<StudentDetailResponseDto> getStudentList() {
+        List<StudentDetail> studentList = studentRepository.findAll();
+
+        return studentList.stream().map(StudentDetailResponseDto::from).toList();
     }
 
     public TestResponseDto registerTest(TestRequestDto dto){
@@ -74,4 +85,11 @@ public class ManagerService {
 
         return TestResponseDto.of(test);
     }
+
+    public List<TestResponseDto> getTestList() {
+        List<Test> testList = testRepository.findAllWithCourse();
+
+        return testList.stream().map(TestResponseDto::of).toList();
+    }
+
 }
