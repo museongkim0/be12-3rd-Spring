@@ -1,5 +1,7 @@
 package com.example.package404.user.service;
 
+import com.example.package404.global.exception.UserException;
+import com.example.package404.global.response.responseStatus.UserResponseStatus;
 import com.example.package404.user.model.Dto.UserResponseDto;
 import com.example.package404.user.model.User;
 
@@ -24,8 +26,11 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public UserResponseDto.SignupResponse signup(UserRequestDto.SignupRequest dto, String role) {
-        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new UserException(UserResponseStatus.EMAIL_ALREADY_IN_USE);
+        }
 
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
         User user= userRepository.save(dto.toEntity(encodedPassword, role));
 
         return UserResponseDto.SignupResponse.from(user);
