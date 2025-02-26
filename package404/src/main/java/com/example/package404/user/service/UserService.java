@@ -47,16 +47,10 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> result = userRepository.findByEmail(username);
-
-        if (result.isPresent()) {
-            // 7번 로직
-            User user = result.get();
-            return user;
-        }
-
-        return null;
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
     }
+
 
 
 }
