@@ -29,7 +29,6 @@ public class CurriculumResponseDto {
     public static CurriculumResponseDto from(Curriculum curriculum) {
         return CurriculumResponseDto.builder()
                 .idx(curriculum.getIdx())
-                .name(curriculum.getName())
                 .curriculumDate(curriculum.getCurriculumDate())
                 .curriculumDay(curriculum.getCurriculumDay())
                 .curriculumSubject(curriculum.getCurriculumSubject())

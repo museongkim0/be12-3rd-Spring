@@ -1,32 +1,41 @@
 package com.example.package404.instructor.model;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-
-
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Curriculum {
+public class Homework {
+
+
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
-    private LocalDate curriculumDate;
-    private int curriculumDay;
-    private String curriculumSubject;
-    private int curriculumHours;
+    private long idx;
+
+
+
+    private String title;
+    private String content;
+
+
+
 
     @ManyToOne
-    @JoinColumn(name="course_idx")
+    @JoinColumn(name = "course_idx")
     private Course course;
+
+
+
 
 
 }

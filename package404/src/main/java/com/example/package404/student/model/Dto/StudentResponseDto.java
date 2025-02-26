@@ -28,7 +28,7 @@ public class StudentResponseDto {
                 .password(user.getPassword())
                 .name(user.getName())
                 .role(user.getRole())
-                .studentDetail(StudentDetailResponseDto.from(s))
+                .studentDetail(StudentDetailResponseDto.from(user.getStudentDetail()))
                 .build();
     }
 }

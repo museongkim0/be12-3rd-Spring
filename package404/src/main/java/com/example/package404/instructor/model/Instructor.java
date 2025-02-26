@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,20 +17,15 @@ import lombok.NoArgsConstructor;
 public class Instructor {
     @Id
     private Long userIdx; // user의 PK를 Instructor의 PK로 사용
-
     private String record;
     private String portfolio;
-
-
-
-
 
     @OneToOne
     @JoinColumn(name = "user_idx")
     private User user;
 
 
-    @OneToOne(mappedBy = "instructor")
-    private Course course;
+    @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
+    private List<Course> course;
 
 }

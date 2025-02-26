@@ -18,20 +18,17 @@ public class CourseRegister {
 
     private String name;
     private int generation;
-    private Long user_idx;
 
 
     List<CurriculumRegisterDto> curriculumList = new ArrayList<>();
 
-    public Course toEntity(User user) {
-        Instructor instructor = Instructor.builder()
-                .user(user)
-                .build();
+    public Course toEntity(Instructor instructor) {
+
 
         return Course.builder()
-                .instructor(instructor)
                 .name(name)
                 .generation(generation)
+                .instructor(instructor)
                 .build();
 
     }
