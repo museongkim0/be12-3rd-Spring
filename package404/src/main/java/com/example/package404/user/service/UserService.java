@@ -16,25 +16,34 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+    private static final Pattern pattern = Pattern.compile(EMAIL_REGEX);
 
     @Transactional
     public UserResponseDto.SignupResponse signup(UserRequestDto.SignupRequest dto, String role) {
+        // 이메일 형식 검증
+        if (!pattern.matcher(dto.getEmail()).matches()) {
+            throw new UserException(UserResponseStatus.INVALID_EMAIL_FORMAT);
+        }
+
+        // 이메일 중복 체크
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
             throw new UserException(UserResponseStatus.EMAIL_ALREADY_IN_USE);
         }
 
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
-        User user= userRepository.save(dto.toEntity(encodedPassword, role));
+        User user = userRepository.save(dto.toEntity(encodedPassword, role));
 
         return UserResponseDto.SignupResponse.from(user);
     }
+
     @Transactional
     public void instructorSignup(UserRequestDto.SignupRequest dto) {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
