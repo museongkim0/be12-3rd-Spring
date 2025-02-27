@@ -1,6 +1,11 @@
 package com.example.package404.instructor.service;
 
 
+import com.example.package404.global.exception.BaseException;
+import com.example.package404.global.exception.InstructorException;
+import com.example.package404.global.response.BaseResponse;
+import com.example.package404.global.response.responseStatus.BaseResponseStatus;
+import com.example.package404.global.response.responseStatus.InstructorResponseStatus;
 import com.example.package404.instructor.model.Course;
 import com.example.package404.instructor.model.Instructor;
 import com.example.package404.instructor.model.dto.req.InstructorRequestDto;
@@ -26,16 +31,11 @@ public class InstructorService {
 
     //    //Todo 강사 조회
     public InstructorResponseDto getInstructor(Long instructorIdx) {
+        Instructor instructor = instructorRepository.findById(instructorIdx)
+                .orElseThrow(() -> new InstructorException(InstructorResponseStatus.INSTRUCTOR_NOT_FOUND));
 
-        Optional<Instructor> instructor = instructorRepository.findById(instructorIdx);
-
-        if (instructor.isPresent()) {
-            return InstructorResponseDto.from(instructor.get());
-        }
-
-        return null;
+        return InstructorResponseDto.from(instructor);
     }
-
 // 그냥 서비스로직 내 idx 값 조회
     public Instructor getInstructorId(Long useridx) {
         Optional<Instructor> instructor = instructorRepository.findDistinctInstructorByUserIdx(useridx);

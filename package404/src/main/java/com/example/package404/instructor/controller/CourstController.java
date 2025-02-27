@@ -9,6 +9,7 @@ import com.example.package404.user.model.User;
 import com.example.package404.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -67,7 +68,6 @@ public class CourstController {
         CourseResponseDto response = courseService.read(generation);
         return ResponseEntity.ok(response);
     }
-    //
 
 
 

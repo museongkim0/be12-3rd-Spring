@@ -1,6 +1,8 @@
 package com.example.package404.instructor.controller;
 
 
+import com.example.package404.global.response.BaseResponse;
+import com.example.package404.global.response.BaseResponseServiceImpl;
 import com.example.package404.instructor.model.dto.req.InstructorRequestDto;
 import com.example.package404.instructor.model.dto.res.InstructorResponseDto;
 import com.example.package404.instructor.repository.InstructorRepository;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/instructor")
 public class InstructorController {
 
+    private final BaseResponseServiceImpl baseResponseService;
 
 
     private final InstructorService instructorService;
@@ -33,11 +36,13 @@ public class InstructorController {
     //Todo 강사가 자기 정보 불러오기
     //Todo 에러 처리 해줘야함
     @GetMapping("/edit/{instructorIdx}")
-    public ResponseEntity<InstructorResponseDto> getInstructor(@PathVariable Long instructorIdx) {
+    public void getInstructor(@PathVariable Long instructorIdx) {
+//    public BaseResponse<InstructorResponseDto> getInstructor(@PathVariable Long instructorIdx) {
 
         InstructorResponseDto response = instructorService.getInstructor(instructorIdx);
 
-        return ResponseEntity.ok(response);
+
+//        return baseResponseService.getSuccessResponse();
     }
 
     // 강사 정보 수정
@@ -47,9 +52,6 @@ public class InstructorController {
 
 //        instructorService.setinfo(dto , user);
     }
-
-
-
 
     // Todo 학생이 강사정보 조회
     @GetMapping("/getinstructor")
