@@ -1,8 +1,10 @@
 package com.example.package404.user.controller;
 
+import com.example.package404.global.exception.UserException;
 import com.example.package404.global.response.BaseResponse;
 import com.example.package404.global.response.BaseResponseServiceImpl;
 import com.example.package404.global.response.responseStatus.CommonResponseStatus;
+import com.example.package404.global.response.responseStatus.UserResponseStatus;
 import com.example.package404.user.service.UserService;
 import com.example.package404.user.model.Dto.UserRequestDto;
 import com.example.package404.user.model.Dto.UserResponseDto;
@@ -16,13 +18,25 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
     private final BaseResponseServiceImpl baseResponseService;
 
     @PostMapping("/signup/{role}")
-    public BaseResponse<Object> signup(@RequestBody UserRequestDto.SignupRequest dto, @PathVariable String role) {
-        UserResponseDto.SignupResponse response = userService.signup(dto, role);
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
+    public ResponseEntity<BaseResponse<Object>> signup(@RequestBody UserRequestDto.SignupRequest dto, @PathVariable String role) {
+        try {
+            UserResponseStatus userSUCCESS = UserResponseStatus.SUCCESS;
+            UserResponseDto.SignupResponse response = userService.signup(dto, role);
+            BaseResponse baseResponse = BaseResponse.builder()
+                    .code(userSUCCESS.getCode())
+                    .message(userSUCCESS.getMessage())
+                    .isSuccess(userSUCCESS.isSuccess())
+                    .data(response)
+                    .build();
+
+            return ResponseEntity.ok(baseResponse);
+        } catch (UserException e) {
+            return ResponseEntity.badRequest().body(new BaseResponse<>());
+        }
     }
 
 }
