@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query("SELECT DISTINCT c FROM Course c " +
-            "LEFT JOIN FETCH c.sectionList " +
+            "LEFT JOIN FETCH c.curriculumList " +
             "LEFT JOIN FETCH c.testList " +
             "LEFT JOIN FETCH c.instructor")
     List<Course> findAllWithAssociations();

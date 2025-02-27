@@ -11,16 +11,15 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface InstructorRepository extends JpaRepository<Instructor, Long> {
+public interface InstructorRepository  extends JpaRepository<Instructor, Long> {
 
 
 
-    @Query("SELECT i FROM Instructor i JOIN FETCH i.user WHERE i.userIdx = :userIdx")
-    Optional<Instructor> findByIdWithUser(@Param("userIdx") Long userIdx);
+//    @Query("SELECT i FROM Instructor i JOIN FETCH i.user WHERE i.userIdx = :userIdx")
+//    Optional<Instructor> findByIdWithUser(@Param("userIdx") Long userIdx);
 
     @Query("SELECT DISTINCT i FROM Instructor i JOIN FETCH i.user u WHERE i.userIdx = :userIdx")
     Optional<Instructor> findDistinctInstructorByUserIdx(@Param("userIdx") Long userIdx);
 
-public interface InstructorRepository  extends JpaRepository<Instructor, Long> {
     Optional<Instructor> findById(Long userIdx);
 }
