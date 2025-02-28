@@ -20,7 +20,7 @@ public class UserRequestDto {
         private LocalDate birth;
         private String role;
 
-        public User toEntity(String encodedPassword, String instructor) {
+        public User toEntity(String encodedPassword, String role) {
             return User.builder()
                     .email(email)
                     .password(encodedPassword)
@@ -29,5 +29,7 @@ public class UserRequestDto {
                     .role(role)
                     .build();
         }
+
+
     }
 }
