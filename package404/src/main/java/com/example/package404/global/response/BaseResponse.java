@@ -1,5 +1,6 @@
 package com.example.package404.global.response;
 
+import com.example.package404.global.response.responseStatus.BaseResponseStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,6 @@ public class BaseResponse<T> {
         this.code = code;
         this.data = data;
     }
+
 
 }
