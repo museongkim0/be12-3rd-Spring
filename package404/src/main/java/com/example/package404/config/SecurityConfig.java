@@ -40,7 +40,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())  // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/user/signup/{role}").permitAll()  // 로그인, 회원가입 허용
-                        .requestMatchers("/board/**").permitAll()
+                        .requestMatchers("/board/**").hasRole("student")
+                        .requestMatchers("/instructor/**" , "/course/**").permitAll()
                         .anyRequest().authenticated()  // 나머지는 인증 필요
                 )
                 .addFilterAt(new LoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)  // 로그인 필터 추가
