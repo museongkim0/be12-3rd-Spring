@@ -1,6 +1,8 @@
 package com.example.package404.instructor.controller;
 
+import com.example.package404.instructor.model.Curriculum;
 import com.example.package404.instructor.model.dto.req.CourseRegister;
+import com.example.package404.instructor.model.dto.res.CurriculumResponseDto;
 import com.example.package404.instructor.model.dto.res.InstructorCourseListResponseDto;
 import com.example.package404.instructor.model.dto.res.CourseResponseDto;
 import com.example.package404.instructor.repository.CourseRepository;
@@ -56,7 +58,11 @@ public class CourstController {
 
     //Todo 페이지로 처리할건데 총 교과목 단위로 조회해야함
 
-
+    //교과목 별 조회
+    @GetMapping("/curriculum")
+    public List<CurriculumResponseDto> getCurriculumBySubject(@RequestParam String subject) {
+        return courseService.getCurriculumBySubject(subject);
+    }
 
 
 
