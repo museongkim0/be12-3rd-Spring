@@ -24,12 +24,12 @@ public class UserController {
     @PostMapping("/signup/{role}")
     public ResponseEntity<BaseResponse<Object>> signup(@RequestBody UserRequestDto.SignupRequest dto, @PathVariable String role) {
         try {
-            UserResponseStatus userNotFound = UserResponseStatus.USER_NOT_FOUND;
+            UserResponseStatus userSUCCESS = UserResponseStatus.SUCCESS;
             UserResponseDto.SignupResponse response = userService.signup(dto, role);
             BaseResponse baseResponse = BaseResponse.builder()
-                    .code(userNotFound.getCode())
-                    .message(userNotFound.getMessage())
-                    .isSuccess(userNotFound.isSuccess())
+                    .code(userSUCCESS.getCode())
+                    .message(userSUCCESS.getMessage())
+                    .isSuccess(userSUCCESS.isSuccess())
                     .data(response)
                     .build();
 
