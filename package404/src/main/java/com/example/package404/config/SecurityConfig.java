@@ -39,8 +39,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/user/signup/{role}").permitAll()  // 로그인, 회원가입 허용
-                        .requestMatchers("/board/**").hasRole("student")
+                        .requestMatchers("/login", "/user/signup2/{role}").permitAll()  // 로그인, 회원가입 허용
+                        .requestMatchers("/board/**"  ,"/board/1").hasRole("STUDENT")
+                        .requestMatchers("/instructor/**"  ,"/instructor/1").hasRole("INSTRUCTOR")
                         .requestMatchers("/instructor/**" , "/course/**").permitAll()
                         .anyRequest().authenticated()  // 나머지는 인증 필요
                 )

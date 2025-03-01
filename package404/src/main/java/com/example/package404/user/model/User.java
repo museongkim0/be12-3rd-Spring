@@ -76,14 +76,11 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        GrantedAuthority authority = new SimpleGrantedAuthority(email);
 
-        authorities.add(authority);
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role)); // 예: "ROLE_USER", "ROLE_ADMIN" 등
+
         return authorities;
     }
-
-
-
     public static UserDetails loadUserByEmail(String email, UserRepository userRepository) throws UsernameNotFoundException {
     User user = userRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + email));
