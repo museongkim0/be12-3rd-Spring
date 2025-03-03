@@ -40,3 +40,7 @@ logging:
 jwt:
   secret: ${SECRET_KEY}
   expiration: 3600000
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
