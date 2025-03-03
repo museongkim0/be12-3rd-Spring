@@ -21,6 +21,7 @@ public class Curriculum {
     private Long idx;
     private LocalDate curriculumDate;
     private int curriculumDay;
+    private String content;
     private String curriculumSubject;
     private int curriculumHours;
 

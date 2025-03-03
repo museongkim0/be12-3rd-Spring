@@ -4,6 +4,13 @@ import lombok.Getter;
 
 @Getter
 public enum InstructorResponseStatus implements BaseResponseStatus {
+
+
+    SUCCESS(true, 1800, "요청에 성공했습니다."),
+    CREATED(true, 1801, "데이터가 성공적으로 생성되었습니다."),
+    UPDATED(true, 1802, "데이터가 성공적으로 수정되었습니다."),
+    DELETED(true, 1803, "데이터가 성공적으로 삭제되었습니다."),
+
     // 4000번대 - Instructor 관련 에러
     INSTRUCTOR_NOT_FOUND(false, 4001, "강사 정보를 찾을 수 없습니다."),
     DUPLICATE_INSTRUCTOR(false, 4002, "이미 존재하는 강사입니다."),

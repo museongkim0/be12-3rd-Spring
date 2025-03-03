@@ -2,9 +2,11 @@ package com.example.package404.instructor.service;
 
 
 import com.example.package404.instructor.model.Course;
+import com.example.package404.instructor.model.Curriculum;
 import com.example.package404.instructor.model.Instructor;
 import com.example.package404.instructor.model.dto.req.CourseRegister;
 import com.example.package404.instructor.model.dto.res.CourseResponseDto;
+import com.example.package404.instructor.model.dto.res.CurriculumResponseDto;
 import com.example.package404.instructor.model.dto.res.InstructorCourseListResponseDto;
 import com.example.package404.instructor.repository.CourseRepository;
 import com.example.package404.instructor.repository.CurriculumRepository;
@@ -20,9 +22,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CourseService {
     private final CourseRepository courseRepository;
-    private final CurriculumRepository curriculumRepository;
     private final InstructorService instructorService;
-
+    private final CurriculumService curriculumService;
 
     @Transactional
     public void register(CourseRegister dto, User user) {
@@ -31,10 +32,10 @@ public class CourseService {
         Instructor instructor = instructorService.getInstructorId(user.getIdx());
 
         Course course = courseRepository.save(dto.toEntity(instructor));
+        curriculumService.registerCurriculum(dto.getCurriculumList(), course);
 
-        dto.getCurriculumList().forEach(Course_CurriculumRegisterDto -> {
-            curriculumRepository.save(Course_CurriculumRegisterDto.toEntity(course));
-        });
+
+
     }
 
 
@@ -51,6 +52,14 @@ public class CourseService {
         return result.stream()
                 .map(InstructorCourseListResponseDto::from)  // Course 객체를 CourseListResponseDto로 변환
                 .collect(Collectors.toList());  // 변환된 객체들을 리스트로 수집
+    }
+
+
+    public List<CurriculumResponseDto> getCurriculumBySubject(String subject) {
+        List<Curriculum> result = curriculumService.getCurriculumBySubject(subject);
+        return result.stream().map(CurriculumResponseDto::from).collect(Collectors.toList());
+
+
     }
 
 
@@ -85,11 +94,6 @@ public class CourseService {
     public Course getCourse(Long courseIdx) {
         return courseRepository.findById(courseIdx).orElseThrow();
     }
-
-
-
-
-
 
 
 

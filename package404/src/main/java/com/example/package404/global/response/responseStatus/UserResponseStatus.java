@@ -18,7 +18,11 @@ public enum UserResponseStatus implements BaseResponseStatus {
     INVALID_PASSWORD(false, 2010, "잘못된 비밀번호입니다."),
     TOO_MANY_FAILED_ATTEMPTS(false, 2011, "로그인 시도 횟수가 초과되었습니다."),
     EMAIL_ALREADY_IN_USE(false, 2012, "해당 이메일은 이미 사용 중입니다."),
+    INVALID_EMAIL_FORMAT(false, 2014, "유효하지 않은 이메일 형식입니다."),
+    // 성공적인 응답을 위한 추가
+    SUCCESS(true, 2000, "요청이 성공적으로 처리되었습니다."),
     PHONE_NUMBER_ALREADY_IN_USE(false, 2013, "해당 전화번호는 이미 사용 중입니다.");
+
 
 
     private final boolean isSuccess;

@@ -2,13 +2,11 @@ package com.example.package404.user.controller;
 
 import com.example.package404.global.response.BaseResponse;
 import com.example.package404.global.response.BaseResponseServiceImpl;
-import com.example.package404.global.response.responseStatus.CommonResponseStatus;
+import com.example.package404.global.response.responseStatus.UserResponseStatus;
 import com.example.package404.user.service.UserService;
 import com.example.package404.user.model.Dto.UserRequestDto;
 import com.example.package404.user.model.Dto.UserResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -16,13 +14,27 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class UserController {
 
-  private final UserService userService;
+    private final UserService userService;
     private final BaseResponseServiceImpl baseResponseService;
 
+
     @PostMapping("/signup/{role}")
-    public BaseResponse<Object> signup(@RequestBody UserRequestDto.SignupRequest dto, @PathVariable String role) {
+    public BaseResponse<UserResponseDto.SignupResponse> createUser(@PathVariable String role, @RequestBody UserRequestDto.SignupRequest dto) {
         UserResponseDto.SignupResponse response = userService.signup(dto, role);
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
+
+        return baseResponseService.getSuccessResponse(response, UserResponseStatus.SUCCESS);
+    }
+    @GetMapping("/dd")
+    public String hello() {
+        return "유진님 바보";
+    }
+
+
+    @PostMapping("/signup2/{role}")
+    public String createUser2(@PathVariable String role, @RequestBody UserRequestDto.SignupRequest dto) {
+         userService.signup2(dto, role);
+
+        return "dd";
     }
 
 }
