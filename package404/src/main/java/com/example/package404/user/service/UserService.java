@@ -62,11 +62,12 @@ public class UserService implements UserDetailsService {
             managerSignup(dto);
         } else if ("STUDENT".equals(role)) {
             studentSignup(dto);
-        }else if("INSTRUCTOR".equals(role)) {
+        } else if ("INSTRUCTOR".equals(role)) {
             instructorSignup(dto);
+        } else {
+            throw new UserException(UserResponseStatus.UNIDENTIFIED_ROLE);
         }
         // 이메일 형식 검증
-
 
 
     }
@@ -76,7 +77,9 @@ public class UserService implements UserDetailsService {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
 
         userRepository.save(dto.toEntity(encodedPassword, "INSTRUCTOR"));
-    }@Transactional
+    }
+
+    @Transactional
     public void studentSignup(UserRequestDto.SignupRequest dto) {
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
 
@@ -96,7 +99,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
     }
-
 
 
 }
