@@ -5,6 +5,7 @@ import com.example.package404.comment.model.Comment;
 import com.example.package404.student.model.StudentDetail;
 import com.example.package404.user.repository.UserRepository;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.*;
@@ -53,6 +54,7 @@ public class User implements UserDetails {
 
     // 게시판이랑 관계 설정
     @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
     private List<Board> boards;
 
     // 댓글이랑 관계 설정

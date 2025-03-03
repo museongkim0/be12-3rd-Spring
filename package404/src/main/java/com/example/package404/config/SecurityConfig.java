@@ -39,8 +39,10 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // CSRF 비활성화
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/user/signup/{role}").permitAll()  // 로그인, 회원가입 허용
-                        .requestMatchers("/board/**").permitAll()
+                        .requestMatchers("/login", "/user/signup/{role}", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        //.requestMatchers("/login", "/user/signup/{role}").permitAll()  // 로그인, 회원가입 허용
+                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/favicon.ico").permitAll() //swagger UI 허용
+                        //.requestMatchers("/board/**").permitAll()   //임시로 board 허용 상태
                         .anyRequest().authenticated()  // 나머지는 인증 필요
                 )
                 .addFilterAt(new LoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)  // 로그인 필터 추가

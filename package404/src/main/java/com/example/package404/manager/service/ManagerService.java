@@ -1,5 +1,9 @@
 package com.example.package404.manager.service;
 
+import com.example.package404.global.exception.ManagerException;
+import com.example.package404.global.response.BaseResponse;
+import com.example.package404.global.response.responseStatus.CommonResponseStatus;
+import com.example.package404.global.response.responseStatus.ManagerResponseStatus;
 import com.example.package404.instructor.model.Instructor;
 import com.example.package404.instructor.model.dto.res.InstructorResponseDto;
 import com.example.package404.instructor.repository.InstructorRepository;
@@ -18,6 +22,7 @@ import com.example.package404.user.model.User;
 import com.example.package404.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,65 +36,108 @@ public class ManagerService {
     private final ManagerRepository managerRepository;
     private final TestRepository testRepository;
 
-    public List<ManagerResponseDto> getManagerList() {
+    @Transactional(readOnly = true)
+    public BaseResponse<List<ManagerResponseDto>> getManagerList() {
         List<User> managerList = managerRepository.findAll();
-
-        return managerList.stream().map(ManagerResponseDto::of).toList();
+        if (managerList.isEmpty()) {
+            throw new ManagerException(ManagerResponseStatus.MANAGER_NOT_FOUND);
+        }
+        List<ManagerResponseDto> response = managerList.stream()
+                .map(ManagerResponseDto::of)
+                .toList();
+        return new BaseResponse<>(true, CommonResponseStatus.SUCCESS.getMessage(),
+                CommonResponseStatus.SUCCESS.getCode(), response);
     }
 
-    public ManagerResponseDto getManager(Long managerIdx) {
-        User manager = managerRepository.findById(managerIdx).orElseThrow();
-
-        return ManagerResponseDto.of(manager);
+    @Transactional(readOnly = true)
+    public BaseResponse<ManagerResponseDto> getManager(Long managerIdx) {
+        User manager = managerRepository.findById(managerIdx)
+                .orElseThrow(() -> new ManagerException(ManagerResponseStatus.MANAGER_NOT_FOUND));
+        return new BaseResponse<>(true, CommonResponseStatus.SUCCESS.getMessage(),
+                CommonResponseStatus.SUCCESS.getCode(), ManagerResponseDto.of(manager));
     }
 
-    public UserResponseDto.SignupResponse getUser(Long userIdx) {
-        User user = userRepository.findById(userIdx).orElseThrow();
-        return UserResponseDto.SignupResponse.from(user);
+    @Transactional(readOnly = true)
+    public BaseResponse<UserResponseDto.SignupResponse> getUser(Long userIdx) {
+        User user = userRepository.findById(userIdx)
+                .orElseThrow(() -> new ManagerException(ManagerResponseStatus.MANAGER_NOT_FOUND));
+        return new BaseResponse<>(true, CommonResponseStatus.SUCCESS.getMessage(),
+                CommonResponseStatus.SUCCESS.getCode(), UserResponseDto.SignupResponse.from(user));
     }
 
-    public List<InstructorResponseDto> getInstructorList() {
+//    @Transactional(readOnly = true)
+//    public BaseResponse<InstructorResponseDto> getInstructorByEmail(String instructorEmail) {
+//        // Assuming you fixed the repository method to find by userEmail
+//        Instructor instructor = instructorRepository.findByUserEmail(instructorEmail)
+//                .orElseThrow(() -> new ManagerException(ManagerResponseStatus.MANAGER_NOT_FOUND));
+//        return new BaseResponse<>(true, CommonResponseStatus.SUCCESS.getMessage(),
+//                CommonResponseStatus.SUCCESS.getCode(), InstructorResponseDto.from(instructor));
+//    }
+
+    @Transactional(readOnly = true)
+    public BaseResponse<List<InstructorResponseDto>> getInstructorList() {
         List<Instructor> instructorList = instructorRepository.findAll();
-
-        return instructorList.stream().map(InstructorResponseDto::from).toList();
+        if (instructorList.isEmpty()) {
+            throw new ManagerException(ManagerResponseStatus.MANAGER_NOT_FOUND);
+        }
+        List<InstructorResponseDto> response = instructorList.stream()
+                .map(InstructorResponseDto::from)
+                .toList();
+        return new BaseResponse<>(true, CommonResponseStatus.SUCCESS.getMessage(),
+                CommonResponseStatus.SUCCESS.getCode(), response);
     }
 
-    public List<StudentDetailResponseDto> getStudentList() {
+    @Transactional(readOnly = true)
+    public BaseResponse<List<StudentDetailResponseDto>> getStudentList() {
         List<StudentDetail> studentList = studentRepository.findAll();
-
-        return studentList.stream().map(StudentDetailResponseDto::from).toList();
+        if (studentList.isEmpty()) {
+            throw new ManagerException(ManagerResponseStatus.MANAGER_NOT_FOUND);
+        }
+        List<StudentDetailResponseDto> response = studentList.stream()
+                .map(StudentDetailResponseDto::from)
+                .toList();
+        return new BaseResponse<>(true, CommonResponseStatus.SUCCESS.getMessage(),
+                CommonResponseStatus.SUCCESS.getCode(), response);
     }
 
-    public TestResponseDto registerTest(TestRequestDto dto){
+    @Transactional
+    public BaseResponse<TestResponseDto> registerTest(TestRequestDto dto) {
         Test test = testRepository.save(dto.toEntity());
-        return TestResponseDto.of(test);
+        return new BaseResponse<>(true, "테스트 등록 성공",
+                CommonResponseStatus.SUCCESS.getCode(), TestResponseDto.of(test));
     }
 
-    public TestResponseDto updateTest(Long testIdx, TestRequestDto dto) {
+    @Transactional
+    public BaseResponse<TestResponseDto> updateTest(Long testIdx, TestRequestDto dto) {
         Test test = testRepository.findById(testIdx)
-                .orElseThrow(() -> new RuntimeException("Test with id " + testIdx + " not found"));
-
+                .orElseThrow(() -> new ManagerException(ManagerResponseStatus.MANAGER_NOT_FOUND));
         test.setTitle(dto.getTitle());
         test.setContent(dto.getContent());
-
         testRepository.save(test);
-
-        return TestResponseDto.of(test);
+        return new BaseResponse<>(true, "테스트 수정 성공",
+                CommonResponseStatus.SUCCESS.getCode(), TestResponseDto.of(test));
     }
 
-    public TestResponseDto deleteTest(Long testIdx) {
+    @Transactional
+    public BaseResponse<TestResponseDto> deleteTest(Long testIdx) {
         Test test = testRepository.findById(testIdx)
-                .orElseThrow(() -> new RuntimeException("Test with id " + testIdx + " not found"));
-
+                .orElseThrow(() -> new ManagerException(ManagerResponseStatus.MANAGER_NOT_FOUND));
         testRepository.delete(test);
-
-        return TestResponseDto.of(test);
+        return new BaseResponse<>(true, "테스트 삭제 성공",
+                CommonResponseStatus.SUCCESS.getCode(), TestResponseDto.of(test));
     }
 
-    public List<TestResponseDto> getTestList() {
+    @Transactional(readOnly = true)
+    public BaseResponse<List<TestResponseDto>> getTestList() {
         List<Test> testList = testRepository.findAllWithCourse();
-
-        return testList.stream().map(TestResponseDto::of).toList();
+        if (testList.isEmpty()) {
+            throw new ManagerException(ManagerResponseStatus.MANAGER_NOT_FOUND);
+        }
+        List<TestResponseDto> response = testList.stream()
+                .map(TestResponseDto::of)
+                .toList();
+        return new BaseResponse<>(true, CommonResponseStatus.SUCCESS.getMessage(),
+                CommonResponseStatus.SUCCESS.getCode(), response);
     }
 
 }
