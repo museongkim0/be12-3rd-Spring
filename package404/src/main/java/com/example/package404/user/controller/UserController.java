@@ -24,6 +24,7 @@ public class UserController {
 
         return baseResponseService.getSuccessResponse(response, UserResponseStatus.SUCCESS);
     }
+
     @GetMapping("/dd")
     public String hello() {
         return "유진님 바보";
@@ -31,10 +32,10 @@ public class UserController {
 
 
     @PostMapping("/signup2/{role}")
-    public String createUser2(@PathVariable String role, @RequestBody UserRequestDto.SignupRequest dto) {
-         userService.signup2(dto, role);
+    public BaseResponse<UserResponseDto.SignupResponse> createUser2(@PathVariable String role, @RequestBody UserRequestDto.SignupRequest dto) {
+        UserResponseDto.SignupResponse response = userService.signup2(dto, role);
 
-        return "dd";
+        return baseResponseService.getSuccessResponse(response, UserResponseStatus.SUCCESS);
     }
 
 }
