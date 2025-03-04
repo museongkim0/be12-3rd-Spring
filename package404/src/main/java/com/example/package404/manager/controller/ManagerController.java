@@ -9,6 +9,9 @@ import com.example.package404.manager.model.dto.TestRequestDto;
 import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.service.ManagerService;
 import com.example.package404.user.model.Dto.UserResponseDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,48 +24,50 @@ public class ManagerController {
     private final ManagerService managerService;
     private final BaseResponseServiceImpl baseResponseService;
 
+    @Operation(
+            summary = "Read board details",
+            description = "Fetches the full details of a board including comments."
+    )
     @GetMapping("/list")
-    public BaseResponse<Object> managerList() {
-        List<ManagerResponseDto> response = managerService.getManagerList();
-
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
+    public BaseResponse<List<ManagerResponseDto>> managerList() {
+        return managerService.getManagerList();
     }
 
+    @Operation(
+            summary = "Read board details",
+            description = "Fetches the full details of a board including comments."
+    )
     @GetMapping("/{managerIdx}")
-    public BaseResponse<Object> findManager(@PathVariable Long managerIdx) {
-        ManagerResponseDto response = managerService.getManager(managerIdx);
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
+    public BaseResponse<ManagerResponseDto> findManager(@PathVariable Long managerIdx) {
+        return managerService.getManager(managerIdx);
     }
 
+    @Operation(
+            summary = "Read board details",
+            description = "Fetches the full details of a board including comments."
+    )
     @GetMapping("/instructor/list")
-    public BaseResponse<Object> instructorList() {
-        List<InstructorResponseDto> response = managerService.getInstructorList();
-
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
+    public BaseResponse<List<InstructorResponseDto>> instructorList() {
+        return managerService.getInstructorList();
     }
 
     @PostMapping("/test/register")
-    public BaseResponse<Object> registerTest(@RequestBody TestRequestDto dto) {
-        TestResponseDto response = managerService.registerTest(dto);
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
+    public BaseResponse<TestResponseDto> registerTest(@RequestBody TestRequestDto dto) {
+        return managerService.registerTest(dto);
     }
 
     @PostMapping("/test/update/{testIdx}")
-    public BaseResponse<Object> updateTest(Long testIdx, @RequestBody TestRequestDto dto) {
-        TestResponseDto response = managerService.updateTest(testIdx, dto);
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
+    public BaseResponse<TestResponseDto> updateTest(@PathVariable Long testIdx, @RequestBody TestRequestDto dto) {
+        return managerService.updateTest(testIdx, dto);
     }
 
     @PostMapping("/test/delete/{testIdx}")
-    public BaseResponse<Object> deleteTest(Long testIdx) {
-        TestResponseDto response = managerService.deleteTest(testIdx);
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
+    public BaseResponse<TestResponseDto> deleteTest(@PathVariable Long testIdx) {
+        return managerService.deleteTest(testIdx);
     }
 
     @GetMapping("/test/list")
-    public BaseResponse<Object> testList() {
-        List<TestResponseDto> response = managerService.getTestList();
-
-        return baseResponseService.getSuccessResponse(response, CommonResponseStatus.SUCCESS);
+    public BaseResponse<List<TestResponseDto>> testList() {
+        return managerService.getTestList();
     }
 }
