@@ -72,18 +72,4 @@ public class JwtUtil {
 
         return claims.getExpiration().before(new Date());
     }
-
-/*
-    public static boolean validateToken(String token) {
-        try {
-            Jwts.parserBuilder()
-                    .setSigningKey(Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8)))
-                    .build()
-                    .parseClaimsJws(token);
-            return true;
-        } catch (JwtException e) {
-            return false;
-        }
-    }*/
-
 }

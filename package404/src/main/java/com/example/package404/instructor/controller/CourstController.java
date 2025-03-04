@@ -1,5 +1,8 @@
 package com.example.package404.instructor.controller;
 
+import com.example.package404.global.response.BaseResponse;
+import com.example.package404.global.response.BaseResponseServiceImpl;
+import com.example.package404.global.response.responseStatus.InstructorResponseStatus;
 import com.example.package404.instructor.model.Curriculum;
 import com.example.package404.instructor.model.dto.req.CourseRegister;
 import com.example.package404.instructor.model.dto.res.CurriculumResponseDto;
@@ -20,59 +23,58 @@ import java.util.List;
 @RequestMapping("/course")
 public class CourstController {
 
+    private final BaseResponseServiceImpl baseResponseService;
 
     private final CourseService courseService;
 
-    private final UserRepository userRepository;
-    private final CourseRepository courseRepository;
 
+
+
+    //Todo baseResponse
 
     @PostMapping("/register")
-    public void register(/*@AuthenticationPrincipal User user,*/ @RequestBody CourseRegister dto) {
+    public BaseResponse register(@AuthenticationPrincipal User user, @RequestBody CourseRegister dto) {
 
-        //임시 유저 생성
-        User user = userRepository.findById(3L).orElseThrow(() -> new RuntimeException("User not found"));
 
         courseService.register(dto, user);
-    }
 
+        return baseResponseService.getSuccessResponse(InstructorResponseStatus.SUCCESS);
 
-    // -> 리스트 반환하는데 해당 강사가 했던 코스만 가져오는거라 세부 내용 필요 x
-    // 삭제 해도 될것같기도?
-    @GetMapping("/list")
-    public ResponseEntity<List<InstructorCourseListResponseDto>> list() {
-        List<InstructorCourseListResponseDto> response = courseService.list();
-
-        return ResponseEntity.ok(response);
     }
 
 
 
+    //Todo baseResponse
     // 강사가 맡았던 기수 조회
     @GetMapping("/instructor/{userIdx}")
-    public ResponseEntity<List<InstructorCourseListResponseDto> > getInstructorCourse(@PathVariable Long userIdx) {
+    public BaseResponse<List<InstructorCourseListResponseDto>> getInstructorCourse(@PathVariable Long userIdx) {
         List<InstructorCourseListResponseDto> response = courseService.findIstructorCourse(userIdx);
 
-        return ResponseEntity.ok(response);
+        return baseResponseService.getSuccessResponse(response, InstructorResponseStatus.SUCCESS);
     }
 
-    //Todo 페이지로 처리할건데 총 교과목 단위로 조회해야함
+    //Todo baseResponse
 
     //교과목 별 조회
     @GetMapping("/curriculum")
-    public List<CurriculumResponseDto> getCurriculumBySubject(@RequestParam String subject) {
-        return courseService.getCurriculumBySubject(subject);
+    public  BaseResponse<List<CurriculumResponseDto>>getCurriculumBySubject(@RequestParam String subject) {
+
+
+        List<CurriculumResponseDto> response = courseService.getCurriculumBySubject(subject);
+
+        return baseResponseService.getSuccessResponse(response, InstructorResponseStatus.SUCCESS);
     }
 
 
 
 
+    //Todo baseResponse
 
     // 이건 현재 기수들 코스 조회하는거
     @GetMapping("/{generation}")
-    public ResponseEntity<CourseResponseDto> read(@PathVariable int generation) {
+    public BaseResponse<CourseResponseDto> read(@PathVariable int generation) {
         CourseResponseDto response = courseService.read(generation);
-        return ResponseEntity.ok(response);
+        return baseResponseService.getSuccessResponse(response, InstructorResponseStatus.SUCCESS);
     }
 
 
