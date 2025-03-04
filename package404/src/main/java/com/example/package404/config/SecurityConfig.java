@@ -42,13 +42,12 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/user/signup2/{role}").permitAll()  // 로그인, 회원가입 허용
                         .requestMatchers("/v3/**", "/v3/api-docs/**", "/swagger-ui/**",
                                 "/swagger-ui.html", "/swagger-resources/**", "/favicon.ico").permitAll()
-                        .requestMatchers("/board/**", "/board/1").hasRole("STUDENT")
-                        .requestMatchers("/board/**").hasRole("INSTRUCTOR")
-                        .requestMatchers("/board/**").hasRole("MANAGER")
-                        .requestMatchers("/instructor/**", "/instructor/1").hasRole("INSTRUCTOR")
-                        .requestMatchers("/instructor/**", "/course/**").permitAll()
-                        .requestMatchers("/manager/**").hasRole("MANAGER")
-                        .anyRequest().authenticated()  // 나머지는 인증 필요
+                        .requestMatchers("/board/**").hasAnyRole("STUDENT", "INSTRUCTOR", "MANAGER") // 게시판은 로그인한 회원이라면 모두 허용
+                        .requestMatchers("/course/**").hasAnyRole("STUDENT", "INSTRUCTOR", "MANAGER") // 수업은 로그인한 회원이라면 모두 허용
+                        .requestMatchers("/student/**").hasRole("STUDENT") // 학생 기능은 학생에게만 허용
+                        .requestMatchers("/instructor/**").hasRole("INSTRUCTOR") // 강사 기능은 강사에게만 허용
+                        .requestMatchers("/manager/**").hasRole("MANAGER") // 매니저 기능은 매니저에게만 허용
+                        .anyRequest().authenticated()
                 )
                 .addFilterAt(new LoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)  // 로그인 필터 추가
                 .addFilterBefore(new JwtFilter(userService), UsernamePasswordAuthenticationFilter.class);  // JWT 필터 추가
