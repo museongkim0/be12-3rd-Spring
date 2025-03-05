@@ -20,7 +20,14 @@ public enum InstructorResponseStatus implements BaseResponseStatus {
     COURSE_NOT_FOUND(false, 4006, "강의 정보를 찾을 수 없습니다."),
     INSTRUCTOR_ACCESS_DENIED(false, 4007, "강사가 접근할 수 없는 리소스입니다."),
     INSTRUCTOR_CANNOT_GRADE(false, 4008, "강사가 해당 학생의 성적을 수정할 권한이 없습니다."),
-    COURSE_CREATION_FAILED(false, 4009, "강의 개설에 실패했습니다.");
+    COURSE_CREATION_FAILED(false, 4009, "강의 개설에 실패했습니다."),
+    CURRICULUM_NOT_FOUND(false, 4010, "해당 교과목 정보를 찾을 수 없습니다."),
+    INSTRUCTOR_NOT_ASSIGNED(false, 4011, "강사가 해당 강의에 배정되지 않았습니다."),
+    INVALID_COURSE_GENERATION(false, 4012, "잘못된 기수 정보입니다."),
+    CURRICULUM_REGISTRATION_FAILED(false, 4013, "교과목 등록에 실패했습니다."),
+    COURSE_UPDATE_FAILED(false, 4014, "강의 수정에 실패했습니다."),
+    COURSE_DELETION_FAILED(false, 4015, "강의 삭제에 실패했습니다."),
+    UNKNOWN_ERROR(false , 4016 ,"강사 조회 중 오류가 발생했습니다.");
 
     private final boolean isSuccess;
     private final int code;

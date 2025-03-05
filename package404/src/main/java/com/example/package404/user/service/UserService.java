@@ -2,6 +2,7 @@ package com.example.package404.user.service;
 
 import com.example.package404.global.exception.UserException;
 import com.example.package404.global.response.responseStatus.UserResponseStatus;
+import com.example.package404.instructor.model.dto.req.UpdateUserInstructorDto;
 import com.example.package404.user.model.Dto.UserResponseDto;
 import com.example.package404.user.model.User;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
@@ -109,4 +111,20 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public User getUserinfo(Long userIdx){
+        return userRepository.findById(userIdx)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+    public void setUserInfo(User user){
+        userRepository.save(user);
+    }
+
+
+    public List<User> findUsersByRole(String role) {
+        return userRepository.findByRole(role);
+    }
+
+    public void setInstructorInfo(Long instructorIdx, UpdateUserInstructorDto dto) {
+        userRepository.save(dto.toInstructorEntity(instructorIdx));
+    }
 }

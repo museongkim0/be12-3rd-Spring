@@ -28,4 +28,9 @@ public class Instructor {
     @OneToMany(mappedBy = "instructor", fetch = FetchType.LAZY)
     private List<Course> course;
 
+    public Instructor(User user, String record, String portfolio) {
+        this.user = user;
+        this.record = record;
+        this.portfolio = portfolio;
+    }
 }

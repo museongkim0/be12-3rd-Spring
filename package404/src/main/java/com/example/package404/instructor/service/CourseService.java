@@ -1,6 +1,8 @@
 package com.example.package404.instructor.service;
 
 
+import com.example.package404.global.exception.InstructorException;
+import com.example.package404.global.response.responseStatus.InstructorResponseStatus;
 import com.example.package404.instructor.model.Course;
 import com.example.package404.instructor.model.Curriculum;
 import com.example.package404.instructor.model.Instructor;
@@ -23,93 +25,79 @@ import java.util.stream.Collectors;
 public class CourseService {
     private final CourseRepository courseRepository;
     private final InstructorService instructorService;
+    
     private final CurriculumService curriculumService;
 
+
+    // 기수 등록
     @Transactional
     public void register(CourseRegister dto, User user) {
-        System.out.println(user.getIdx());
 
         Instructor instructor = instructorService.getInstructorId(user.getIdx());
+        if (instructor == null) {
+            throw new InstructorException(InstructorResponseStatus.INSTRUCTOR_NOT_FOUND);
+        }
 
-        Course course = courseRepository.save(dto.toEntity(instructor));
+        Course course = dto.toEntity(instructor);
+        try {
+            course = courseRepository.save(course);
+        } catch (Exception e) {
+            throw new InstructorException(InstructorResponseStatus.COURSE_CREATION_FAILED);
+        }
+
         curriculumService.registerCurriculum(dto.getCurriculumList(), course);
-
-
-
     }
-
 
     // 강사의 진행 코스 조회
     public List<InstructorCourseListResponseDto> findIstructorCourse(Long userIdx) {
-            List<Course> courses = courseRepository.findByInstructorUserIdx(userIdx);;
-            return courses.stream()
-                    .map(InstructorCourseListResponseDto::from)  // Course 객체를 CourseListResponseDto로 변환
-                    .collect(Collectors.toList());
+        List<Course> courses = courseRepository.findByInstructorUserIdx(userIdx);
+        if (courses.isEmpty()) {
+            throw new InstructorException(InstructorResponseStatus.INSTRUCTOR_NOT_ASSIGNED);
+        }
+
+        return courses.stream()
+                .map(InstructorCourseListResponseDto::from)
+                .collect(Collectors.toList());
     }
+
     // 학원에서 list 조회
     public List<InstructorCourseListResponseDto> list() {
         List<Course> result = courseRepository.findAllCourses();
+        if (result.isEmpty()) {
+            throw new InstructorException(InstructorResponseStatus.COURSE_NOT_FOUND);
+        }
+
         return result.stream()
-                .map(InstructorCourseListResponseDto::from)  // Course 객체를 CourseListResponseDto로 변환
-                .collect(Collectors.toList());  // 변환된 객체들을 리스트로 수집
+                .map(InstructorCourseListResponseDto::from)
+                .collect(Collectors.toList());
     }
 
-
+    // 교과목별 조회
     public List<CurriculumResponseDto> getCurriculumBySubject(String subject) {
         List<Curriculum> result = curriculumService.getCurriculumBySubject(subject);
+        if (result.isEmpty()) {
+            throw new InstructorException(InstructorResponseStatus.CURRICULUM_NOT_FOUND);
+        }
+
         return result.stream().map(CurriculumResponseDto::from).collect(Collectors.toList());
-
-
     }
-
-
-//    public List<CourseResponseDto> list() {
-//        List<Course> result = courseRepository.findAllWithAssociations();
-//        return result.stream().map(CourseResponseDto::from).collect(Collectors.toList());
-//    }
-
-
-    public List<Course> getCoursesByInstructorId(Long instructorId) {
-        return courseRepository.findByInstructorUserIdx(instructorId);
-    }
-
-
-
 
     // 코스 상세 조회
     @Transactional(readOnly = true)
     public CourseResponseDto read(int generation) {
         Course course = courseRepository.findAllWithCurriculumListByGeneration(generation);
+        if (course == null) {
+            throw new InstructorException(InstructorResponseStatus.COURSE_NOT_FOUND);
+        }
+
         return CourseResponseDto.from(course);
     }
-
-
-//    @Transactional(readOnly = true)
-//    public CourseResponseDto read(Long courseIdx) {
-//        Course course = courseRepository.findById(courseIdx).orElseThrow();
-//        return CourseResponseDto.from(course);
-//    }
 
 
     public Course getCourse(Long courseIdx) {
         return courseRepository.findById(courseIdx).orElseThrow();
     }
 
-
-
-//    public List<CourseDto.CourseResponse> list(int page, int size) {
-//        List<Course> courseList = courseRepository.findAll();
-//
-//        return courseList.stream().map(CourseDto.CourseResponse::from).collect(Collectors.toList());
-//    }
-
-    //기존 list 조회 하지만 밑에  curri 부분 필요 없는것같아서 주석 처리함
-//
-//    @Transactional(readOnly = true)
-//    public List<CourseResponseDto> list() {
-//        List<Course> result = courseRepository.findAllWithcurriculumList();
-//        return result.stream().map(CourseResponseDto::from).collect(Collectors.toList());
-//    }
 
 
 }

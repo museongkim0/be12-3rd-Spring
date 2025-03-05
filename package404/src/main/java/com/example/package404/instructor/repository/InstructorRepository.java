@@ -26,4 +26,7 @@ public interface InstructorRepository  extends JpaRepository<Instructor, Long> {
     Optional<Instructor> findInstructorWithUser(@Param("instructorId") Long instructorId);
 
     Optional<Instructor> findById(Long userIdx);
+
+
+    Optional<Object> findByUser(User user);
 }

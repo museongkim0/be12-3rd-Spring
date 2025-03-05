@@ -14,7 +14,6 @@ import com.example.package404.manager.model.dto.TestResponseDto;
 import com.example.package404.manager.repository.ManagerRepository;
 import com.example.package404.manager.repository.TestRepository;
 import com.example.package404.student.model.Dto.StudentDetailResponseDto;
-import com.example.package404.student.model.Dto.StudentResponseDto;
 import com.example.package404.student.model.StudentDetail;
 import com.example.package404.student.repository.StudentRepository;
 import com.example.package404.user.model.Dto.UserResponseDto;
@@ -25,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

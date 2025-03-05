@@ -21,15 +21,26 @@ public class InstructorResponseDto {
     private String name;
 
     public static InstructorResponseDto from(Instructor instructor) {
+        return InstructorResponseDto.builder()
+                .userIdx(instructor != null ? instructor.getUserIdx() : null)
+                .record(instructor != null ? instructor.getRecord() : "기록 없음")
+                .portfolio(instructor != null ? instructor.getPortfolio() : "기록 없음")
+                .email(instructor != null ? instructor.getUser().getEmail() : "")
+                .name(instructor != null ? instructor.getUser().getName() : "")
+                .build();
+    }
+
+    public static InstructorResponseDto from(Instructor instructor ,User user ) {
 
         return InstructorResponseDto.builder()
-                .userIdx(instructor.getUserIdx())
-                .record(instructor.getRecord())
-                .portfolio(instructor.getPortfolio())
-                .email(instructor.getUser().getEmail())
-                .name(instructor.getUser().getName())
+                .userIdx(user.getIdx())
+                .record(instructor != null ? instructor.getRecord() : "기록 없음")  // 기본값 설정
+                .portfolio(instructor != null ? instructor.getPortfolio() : "기록 없음")  // 기본값 설정
+                .email(user.getEmail())
+                .name(user.getName())
                 .build();
 
     }
+
 
 }
