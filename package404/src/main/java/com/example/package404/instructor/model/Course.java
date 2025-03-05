@@ -20,16 +20,21 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
+
     private String name;
     private int generation;
 
     @OneToMany(mappedBy = "course")
-    private List<Curriculum> sectionList = new ArrayList<>();
+    private List<Curriculum> curriculumList = new ArrayList<>();
 
     @OneToMany(mappedBy = "course")
     private List<Test> testList = new ArrayList<>();
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="user_idx")
     private Instructor instructor;
+
+
+    @OneToMany(mappedBy = "course")
+    private List<Homework> homeworkList = new ArrayList<>();
 }

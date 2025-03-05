@@ -20,7 +20,8 @@ public class StudentResponseDto {
 
     StudentDetailResponseDto studentDetail;
 
-    public static StudentResponseDto from(User user) {
+    public static StudentResponseDto from(StudentDetail s) {
+        User user = s.getUser();
         return StudentResponseDto.builder()
                 .idx(user.getIdx())
                 .email(user.getEmail())

@@ -1,32 +1,35 @@
 package com.example.package404.user.model.Dto;
 
-import com.example.package404.user.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-import java.util.List;
-import java.util.Set;
+import com.example.package404.user.model.User;
+import lombok.*;
+
+import java.time.LocalDate;
 
 public class UserRequestDto {
 
+    @Data
+    @NoArgsConstructor
     @AllArgsConstructor
     @Getter
+    @Builder
     public static class SignupRequest {
         private String email;
         private String password;
         private String name;
-        private String birth;
+        private LocalDate birth;
+        private String role;
 
-        public User toEntity(String encodedPassword, Set<String> roles) {
+        public User toEntity(String encodedPassword, String role) {
             return User.builder()
                     .email(email)
                     .password(encodedPassword)
                     .name(name)
                     .birth(birth)
-                    .roles(roles) // 역할 처리
+                    .role(role)
                     .build();
         }
+
+
     }
 }
-
-

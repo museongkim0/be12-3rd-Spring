@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class InstructorIdDto {
-    private Long idx;
+    private Long userIdx;
 
-    // Instructor Entity를 받아서 필요한 idx만 반환
-//    public static Instructor from(Instructor instructor) {
-//        return Instructor.builder()
-//                .idx(instructor.getIdx())
-//                .build();
-//    }
+//     Instructor Entity를 받아서 필요한 idx만 반환
+    public static Instructor from(Instructor instructor) {
+        return Instructor.builder()
+                .userIdx(instructor.getUserIdx())
+                .build();
+    }
 }

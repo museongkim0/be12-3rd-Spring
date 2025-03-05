@@ -1,11 +1,23 @@
 package com.example.package404.user.model;
 
+import com.example.package404.board.model.Board;
+import com.example.package404.comment.model.Comment;
 import com.example.package404.student.model.StudentDetail;
+import com.example.package404.user.repository.UserRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
 import lombok.*;
+
+
+import org.apache.catalina.Role;
+import org.springframework.context.support.BeanDefinitionDsl;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -14,6 +26,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+
 @Entity
 @Getter
 @Setter
@@ -21,20 +35,35 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
+    @Column(unique = true)
     private String email;
     private String password;
     private String name;
     private LocalDate birth;
+    private boolean enabled;
     private String role;
 
-    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, optional = true)
     private StudentDetail studentDetail;
 
-    @ElementCollection(fetch = FetchType.EAGER) // 다중 권한 저장
-    private List<String> roles = new ArrayList<>();
+
+    // 게시판이랑 관계 설정
+    @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
+    private List<Board> boards;
+
+    // 댓글이랑 관계 설정
+//    @OneToMany(mappedBy = "user")
+//    private List<Comment> comments;
+
+//    @ElementCollection(fetch = FetchType.EAGER) // 다중 권한 저장
+//    private List<String> roles = new ArrayList<>();
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -46,27 +75,21 @@ public class User implements UserDetails {
         return email;
     }
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        Collection<GrantedAuthority> authorities = new ArrayList<>();
-//        GrantedAuthority authority = new SimpleGrantedAuthority(role);
-////        GrantedAuthority authority = new GrantedAuthority() {
-////            @Override
-////            public String getAuthority() {
-////                return role;
-////            }
-////        };
-//
-//        authorities.add(authority);
-//        return authorities;
-//    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-@Override
-public Collection<? extends GrantedAuthority> getAuthorities() {
-    return roles.stream()
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role)); // 예: "ROLE_USER", "ROLE_ADMIN" 등
+
+        return authorities;
+    }
+    public static UserDetails loadUserByEmail(String email, UserRepository userRepository) throws UsernameNotFoundException {
+    User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + email));
+
+    return user;
 }
+
 
 
     @Override

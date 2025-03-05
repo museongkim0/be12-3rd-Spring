@@ -1,6 +1,7 @@
 package com.example.package404.student.model;
 
 import com.example.package404.user.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,5 +27,25 @@ public class StudentDetail {
 
     @OneToOne
     @JoinColumn(name="user_idx")
+    @JsonIgnore
     private User user;
+
+    public void updateTestStatus() {
+        this.testStatus = true;
+    }
+    public void updatePerception() {
+        this.perception += 1;
+    }
+    public void updateAttendance() {
+        this.attendance += 1;
+    }
+    public void updateLeaveEarly() {
+        this.leaveEarly += 1;
+    }
+    public void updateOuting() {
+        this.outing += 1;
+    }
+    public void updateVacationLeft() {
+        this.vacationLeft -= 1;
+    }
 }

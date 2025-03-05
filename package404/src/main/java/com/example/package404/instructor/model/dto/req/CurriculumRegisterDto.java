@@ -16,10 +16,11 @@ import java.time.LocalDate;
 public class CurriculumRegisterDto {
 
 
-    private LocalDate curriculumDate;
-    private int curriculumDay;
-    private String curriculumSubject;
-    private int curriculumHours;
+    private LocalDate curriculumDate; //일자
+    private int curriculumDay; //일수
+    private String curriculumSubject; // 교과목
+    private String content; // 내용
+    private int curriculumHours; // 편성시간
 
 
 
@@ -29,6 +30,7 @@ public class CurriculumRegisterDto {
                 .curriculumDay(curriculumDay)
                 .curriculumSubject(curriculumSubject)
                 .curriculumHours(curriculumHours)
+                .content(content)
                 .course(course)
                 .build();
     }

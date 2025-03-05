@@ -16,8 +16,7 @@ import java.time.LocalDate;
 public class CurriculumResponseDto {
 
     private Long idx;
-    private String name;
-
+    private String content;
     private LocalDate curriculumDate;
     private int curriculumDay;
     private String curriculumSubject;
@@ -29,7 +28,7 @@ public class CurriculumResponseDto {
     public static CurriculumResponseDto from(Curriculum curriculum) {
         return CurriculumResponseDto.builder()
                 .idx(curriculum.getIdx())
-                .name(curriculum.getName())
+                .content(curriculum.getContent())
                 .curriculumDate(curriculum.getCurriculumDate())
                 .curriculumDay(curriculum.getCurriculumDay())
                 .curriculumSubject(curriculum.getCurriculumSubject())
